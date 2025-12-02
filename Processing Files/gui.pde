@@ -14,17 +14,41 @@
  * =========================================================
  */
 
-synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:834334:
+synchronized public void GUIWindowDraw(PApplet appc, GWinData data) { //_CODE_:GUIWindow:359935:
   appc.background(230);
-} //_CODE_:window1:834334:
+} //_CODE_:GUIWindow:359935:
 
-public void numVolunteersSlider(GSlider source, GEvent event) { //_CODE_:numVolunteers:567666:
-  println("slider1 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:numVolunteers:567666:
+public void volunteerSlider(GCustomSlider source, GEvent event) { //_CODE_:volunteer:841545:
+  println("volunteer - GCustomSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:volunteer:841545:
 
-public void openOrClosedBox(GCheckbox source, GEvent event) { //_CODE_:openOrClosed:345812:
+public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
   println("openOrClosed - GCheckbox >> GEvent." + event + " @ " + millis());
-} //_CODE_:openOrClosed:345812:
+} //_CODE_:openOrClosed1:449196:
+
+public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:376609:
+  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
+} //_CODE_:weather:376609:
+
+public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
+  println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:maxPeopleInLine:800754:
+
+public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
+  println("button1 - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:button1:515551:
+
+public void openOrClosedBox2(GCheckbox source, GEvent event) { //_CODE_:openOrClosed2:716764:
+  println("openOrClosed2 - GCheckbox >> GEvent." + event + " @ " + millis());
+} //_CODE_:openOrClosed2:716764:
+
+public void openOrClosedBox3(GCheckbox source, GEvent event) { //_CODE_:openOrClosed3:914672:
+  println("openOrClosed3 - GCheckbox >> GEvent." + event + " @ " + millis());
+} //_CODE_:openOrClosed3:914672:
+
+public void openOrClosedBox4(GCheckbox source, GEvent event) { //_CODE_:openOrClosed4:296472:
+  println("openOrClosed4 - GCheckbox >> GEvent." + event + " @ " + millis());
+} //_CODE_:openOrClosed4:296472:
 
 
 
@@ -35,34 +59,83 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  window1 = GWindow.getWindow(this, "Window title", 0, 0, 400, 300, JAVA2D);
-  window1.noLoop();
-  window1.setActionOnClose(G4P.KEEP_OPEN);
-  window1.addDrawHandler(this, "win_draw1");
-  numVolunteers = new GSlider(window1, 104, -29, 100, 120, 10.0);
-  numVolunteers.setShowValue(true);
-  numVolunteers.setLimits(1, 1, 10);
-  numVolunteers.setNbrTicks(10);
-  numVolunteers.setShowTicks(true);
-  numVolunteers.setNumberFormat(G4P.INTEGER, 0);
-  numVolunteers.setOpaque(false);
-  numVolunteers.addEventHandler(this, "numVolunteersSlider");
-  volunteers = new GLabel(window1, -2, 18, 100, 19);
-  volunteers.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  volunteers.setText("# of volunteers");
-  volunteers.setOpaque(false);
-  openOrClosed = new GCheckbox(window1, 16, 270, 120, 20);
-  openOrClosed.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
-  openOrClosed.setText("Open?");
-  openOrClosed.setOpaque(false);
-  openOrClosed.addEventHandler(this, "openOrClosedBox");
-  openOrClosed.setSelected(true);
-  window1.loop();
+  GUIWindow = GWindow.getWindow(this, "GUI", 0, 0, 400, 300, JAVA2D);
+  GUIWindow.noLoop();
+  GUIWindow.setActionOnClose(G4P.KEEP_OPEN);
+  GUIWindow.addDrawHandler(this, "GUIWindowDraw");
+  volunteer = new GCustomSlider(GUIWindow, 90, 10, 100, 40, "grey_blue");
+  volunteer.setShowValue(true);
+  volunteer.setLimits(1, 1, 10);
+  volunteer.setNbrTicks(10);
+  volunteer.setShowTicks(true);
+  volunteer.setNumberFormat(G4P.INTEGER, 0);
+  volunteer.setOpaque(false);
+  volunteer.addEventHandler(this, "volunteerSlider");
+  Volunteer = new GLabel(GUIWindow, 10, 10, 80, 20);
+  Volunteer.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  Volunteer.setText("Volunteers");
+  Volunteer.setOpaque(false);
+  openOrClosed1 = new GCheckbox(GUIWindow, 10, 240, 120, 20);
+  openOrClosed1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  openOrClosed1.setText("Window 1 Open?");
+  openOrClosed1.setOpaque(false);
+  openOrClosed1.addEventHandler(this, "openOrClosedBox1");
+  openOrClosed1.setSelected(true);
+  weather = new GDropList(GUIWindow, 90, 60, 90, 100, 4, 10);
+  weather.setItems(loadStrings("list_376609"), 0);
+  weather.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  weather.addEventHandler(this, "weatherControl");
+  weaher = new GLabel(GUIWindow, 10, 60, 80, 20);
+  weaher.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  weaher.setText("Weather");
+  weaher.setOpaque(false);
+  maxPeopleInLine = new GCustomSlider(GUIWindow, 290, 10, 100, 40, "grey_blue");
+  maxPeopleInLine.setShowValue(true);
+  maxPeopleInLine.setLimits(5, 5, 10);
+  maxPeopleInLine.setNbrTicks(5);
+  maxPeopleInLine.setShowTicks(true);
+  maxPeopleInLine.setNumberFormat(G4P.INTEGER, 0);
+  maxPeopleInLine.setOpaque(false);
+  maxPeopleInLine.addEventHandler(this, "maxPeopleInLineSlider");
+  peopleInLine = new GLabel(GUIWindow, 210, 10, 80, 40);
+  peopleInLine.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  peopleInLine.setText("Max Num Of Peope In Line");
+  peopleInLine.setOpaque(false);
+  button1 = new GButton(GUIWindow, 10, 200, 80, 30);
+  button1.setText("Clear People");
+  button1.addEventHandler(this, "button1_click1");
+  openOrClosed2 = new GCheckbox(GUIWindow, 10, 270, 120, 20);
+  openOrClosed2.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  openOrClosed2.setText("Window 2 Open?");
+  openOrClosed2.setOpaque(false);
+  openOrClosed2.addEventHandler(this, "openOrClosedBox2");
+  openOrClosed2.setSelected(true);
+  openOrClosed3 = new GCheckbox(GUIWindow, 150, 240, 120, 20);
+  openOrClosed3.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  openOrClosed3.setText("Window 3 Open?");
+  openOrClosed3.setOpaque(false);
+  openOrClosed3.addEventHandler(this, "openOrClosedBox3");
+  openOrClosed3.setSelected(true);
+  openOrClosed4 = new GCheckbox(GUIWindow, 150, 270, 120, 20);
+  openOrClosed4.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  openOrClosed4.setText("Window 4 Open?");
+  openOrClosed4.setOpaque(false);
+  openOrClosed4.addEventHandler(this, "openOrClosedBox4");
+  openOrClosed4.setSelected(true);
+  GUIWindow.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
-GWindow window1;
-GSlider numVolunteers; 
-GLabel volunteers; 
-GCheckbox openOrClosed; 
+GWindow GUIWindow;
+GCustomSlider volunteer; 
+GLabel Volunteer; 
+GCheckbox openOrClosed1; 
+GDropList weather; 
+GLabel weaher; 
+GCustomSlider maxPeopleInLine; 
+GLabel peopleInLine; 
+GButton button1; 
+GCheckbox openOrClosed2; 
+GCheckbox openOrClosed3; 
+GCheckbox openOrClosed4; 
