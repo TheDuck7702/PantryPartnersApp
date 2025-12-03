@@ -122,7 +122,7 @@ public void createGUI(){
   dropList1 = new GDropList(GUIWindow, 300, 60, 90, 80, 3, 10);
   dropList1.setItems(loadStrings("list_810305"), 0);
   dropList1.addEventHandler(this, "startHungerControl");
-  startHunger = new GLabel(GUIWindow, 220, 50, 80, 40);
+  startHunger = new GLabel(GUIWindow, 212, 49, 80, 40);
   startHunger.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   startHunger.setText("Starting Hunger Level");
   startHunger.setOpaque(false);
