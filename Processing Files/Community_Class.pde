@@ -1,25 +1,30 @@
 class Community { //homeless people
+  String[] genders = {"man", "woman"};  //for random man or woman generator
   //Fields
   float hungerLvl; // 1-3 green. 3-5 yellow. 5-10 red. 
   float waitTime;
   float angerLvl; // more wait time more anger
   float xPos, yPos; // starts under -1000 so they would walk up 
+  String gender; // diff imgs for man or woman
   boolean isServed; //boolean true to start the walk away animation .
                     //If false it will move the line up starting from -1000. 
+                    
   
   //Constucter
-  Community(float xPos, float yPos) {
+  Community(float xPos, float yPos, String gender, boolean isServed ) {
     this.hungerLvl = int(random(1,10));
     this.waitTime = 0;
     this.angerLvl = 0;
     this.isServed = false;  
-    this.xPos = 600;
-    this.yPos = -1200;
+    this.xPos = xPos; //600;
+    this.yPos = yPos; //-1200;
+    this.gender = genders[int(random(2))];
     
   }
   
   //Methods
-  void joinQueue() {
-    
+  void drawHomeless() {
+    //imgs are rly bad, GUI alr uses void setup, do i use Sample SE GUI?
+    //
   }
 }
