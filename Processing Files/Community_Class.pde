@@ -25,6 +25,36 @@ class Community { //homeless people
   //Methods
   void drawHomeless() {
     //imgs are rly bad, GUI alr uses void setup, do i use Sample SE GUI?
-    //
+    //PUT IMGS IN DATA FOLDER
+    
+    //to pick img
+    if ( this.hungerLvl <=3 ){  //RED
+      if (gender.equals("man")) {  //i had to use .equals() as im comparing Strings not ints 
+        //draw GREEN image at xPos yPos of MAN
+      }
+      else{
+        //draw GREEN image at xPos yPos of WOMAN
+      }
+    }
+    
+    else if ( this.hungerLvl <= 5 ) {   //YELLOW
+      if ( gender.equals("man")) {
+        //draw YELLOW image at xPos yPos of MAN
+      }
+      else {
+        //draw of YELLOW image at xPos yPos of WOMaN
+      }
+    }
+    
+    else {     //this.hungerlvl <= 10    //RED
+      if ( gender.equals("man") ) {
+        //draw RED image at xPos yPos of MAN
+      }
+      else {
+        //draw RED image at xPos yPos of WOMAN
+      }
+    }
   }
+  
+  //next method:
 }
