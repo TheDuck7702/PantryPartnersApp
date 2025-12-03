@@ -18,10 +18,6 @@ synchronized public void GUIWindowDraw(PApplet appc, GWinData data) { //_CODE_:G
   appc.background(230);
 } //_CODE_:GUIWindow:359935:
 
-public void volunteerSlider(GCustomSlider source, GEvent event) { //_CODE_:volunteer:841545:
-  println("volunteer - GCustomSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:volunteer:841545:
-
 public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
   println("openOrClosed - GCheckbox >> GEvent." + event + " @ " + millis());
 } //_CODE_:openOrClosed1:449196:
@@ -50,6 +46,10 @@ public void openOrClosedBox4(GCheckbox source, GEvent event) { //_CODE_:openOrCl
   println("openOrClosed4 - GCheckbox >> GEvent." + event + " @ " + millis());
 } //_CODE_:openOrClosed4:296472:
 
+public void startHungerControl(GDropList source, GEvent event) { //_CODE_:dropList1:810305:
+  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
+} //_CODE_:dropList1:810305:
+
 
 
 // Create all the GUI controls. 
@@ -63,79 +63,88 @@ public void createGUI(){
   GUIWindow.noLoop();
   GUIWindow.setActionOnClose(G4P.KEEP_OPEN);
   GUIWindow.addDrawHandler(this, "GUIWindowDraw");
-  volunteer = new GCustomSlider(GUIWindow, 90, 10, 100, 40, "grey_blue");
-  volunteer.setShowValue(true);
-  volunteer.setLimits(1, 1, 10);
-  volunteer.setNbrTicks(10);
-  volunteer.setShowTicks(true);
-  volunteer.setNumberFormat(G4P.INTEGER, 0);
-  volunteer.setOpaque(false);
-  volunteer.addEventHandler(this, "volunteerSlider");
-  Volunteer = new GLabel(GUIWindow, 10, 10, 80, 20);
-  Volunteer.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  Volunteer.setText("Volunteers");
-  Volunteer.setOpaque(false);
-  openOrClosed1 = new GCheckbox(GUIWindow, 10, 240, 120, 20);
+  openOrClosed1 = new GCheckbox(GUIWindow, 20, 200, 120, 20);
   openOrClosed1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   openOrClosed1.setText("Window 1 Open?");
+  openOrClosed1.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   openOrClosed1.setOpaque(false);
   openOrClosed1.addEventHandler(this, "openOrClosedBox1");
   openOrClosed1.setSelected(true);
-  weather = new GDropList(GUIWindow, 90, 60, 90, 100, 4, 10);
+  weather = new GDropList(GUIWindow, 100, 60, 90, 100, 4, 10);
   weather.setItems(loadStrings("list_376609"), 0);
   weather.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   weather.addEventHandler(this, "weatherControl");
-  weaher = new GLabel(GUIWindow, 10, 60, 80, 20);
-  weaher.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  weaher.setText("Weather");
-  weaher.setOpaque(false);
-  maxPeopleInLine = new GCustomSlider(GUIWindow, 290, 10, 100, 40, "grey_blue");
+  weather2 = new GLabel(GUIWindow, 20, 60, 80, 20);
+  weather2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  weather2.setText("Weather");
+  weather2.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  weather2.setOpaque(false);
+  maxPeopleInLine = new GCustomSlider(GUIWindow, 100, 120, 100, 40, "purple18px");
   maxPeopleInLine.setShowValue(true);
   maxPeopleInLine.setLimits(5, 5, 10);
   maxPeopleInLine.setNbrTicks(5);
   maxPeopleInLine.setShowTicks(true);
   maxPeopleInLine.setNumberFormat(G4P.INTEGER, 0);
+  maxPeopleInLine.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   maxPeopleInLine.setOpaque(false);
   maxPeopleInLine.addEventHandler(this, "maxPeopleInLineSlider");
-  peopleInLine = new GLabel(GUIWindow, 210, 10, 80, 40);
+  peopleInLine = new GLabel(GUIWindow, 20, 120, 80, 40);
   peopleInLine.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   peopleInLine.setText("Max Num Of Peope In Line");
+  peopleInLine.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   peopleInLine.setOpaque(false);
-  button1 = new GButton(GUIWindow, 10, 200, 80, 30);
+  button1 = new GButton(GUIWindow, 260, 130, 80, 30);
   button1.setText("Clear People");
+  button1.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
   button1.addEventHandler(this, "button1_click1");
-  openOrClosed2 = new GCheckbox(GUIWindow, 10, 270, 120, 20);
+  openOrClosed2 = new GCheckbox(GUIWindow, 20, 250, 120, 20);
   openOrClosed2.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   openOrClosed2.setText("Window 2 Open?");
+  openOrClosed2.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   openOrClosed2.setOpaque(false);
   openOrClosed2.addEventHandler(this, "openOrClosedBox2");
   openOrClosed2.setSelected(true);
-  openOrClosed3 = new GCheckbox(GUIWindow, 150, 240, 120, 20);
+  openOrClosed3 = new GCheckbox(GUIWindow, 220, 200, 120, 20);
   openOrClosed3.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   openOrClosed3.setText("Window 3 Open?");
+  openOrClosed3.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   openOrClosed3.setOpaque(false);
   openOrClosed3.addEventHandler(this, "openOrClosedBox3");
   openOrClosed3.setSelected(true);
-  openOrClosed4 = new GCheckbox(GUIWindow, 150, 270, 120, 20);
+  openOrClosed4 = new GCheckbox(GUIWindow, 220, 250, 120, 20);
   openOrClosed4.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   openOrClosed4.setText("Window 4 Open?");
+  openOrClosed4.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   openOrClosed4.setOpaque(false);
   openOrClosed4.addEventHandler(this, "openOrClosedBox4");
   openOrClosed4.setSelected(true);
+  dropList1 = new GDropList(GUIWindow, 300, 60, 90, 80, 3, 10);
+  dropList1.setItems(loadStrings("list_810305"), 0);
+  dropList1.addEventHandler(this, "startHungerControl");
+  startHunger = new GLabel(GUIWindow, 220, 50, 80, 40);
+  startHunger.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  startHunger.setText("Starting Hunger Level");
+  startHunger.setOpaque(false);
+  instructions = new GLabel(GUIWindow, 0, 15, 400, 20);
+  instructions.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  instructions.setText("You can adjust the following controls to alternate the outcome");
+  instructions.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  instructions.setOpaque(false);
   GUIWindow.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
 GWindow GUIWindow;
-GCustomSlider volunteer; 
-GLabel Volunteer; 
 GCheckbox openOrClosed1; 
 GDropList weather; 
-GLabel weaher; 
+GLabel weather2; 
 GCustomSlider maxPeopleInLine; 
 GLabel peopleInLine; 
 GButton button1; 
 GCheckbox openOrClosed2; 
 GCheckbox openOrClosed3; 
 GCheckbox openOrClosed4; 
+GDropList dropList1; 
+GLabel startHunger; 
+GLabel instructions; 
