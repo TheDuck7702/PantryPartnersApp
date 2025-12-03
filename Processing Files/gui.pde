@@ -28,6 +28,7 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
   println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
+  getControllerValues();
 } //_CODE_:maxPeopleInLine:800754:
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
