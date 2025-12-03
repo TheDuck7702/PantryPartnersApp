@@ -1,6 +1,12 @@
 import g4p_controls.*;
 
 PImage manImgGreen;
+PImage manImgYellow;
+PImage manImgRed;
+
+PImage womanImgGreen;
+PImage womanImgYellow;
+PImage womanImgRed;
 
 void setup(){
   //gui
