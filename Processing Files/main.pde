@@ -15,6 +15,7 @@ void setup(){
   
   //init imgs
   manImgGreen = loadImage("homeless_guy.png");
+feiefej
   //manImgYellow = loadImage();
   //manImgRed = loadImage(); 
 }
