@@ -27,8 +27,7 @@ class Community { //homeless people
     //imgs are rly bad, GUI alr uses void setup, do i use Sample SE GUI?
     //PUT IMGS IN DATA FOLDER
     //image(manImgGreen, 200, 200 );
-    fill(25,25,25);
-    rect(200,250, 200, 250);
+    
     //to pick img
     if ( this.hungerLvl <=3 ){  //RED
       if (gender.equals("man")) {  //i had to use .equals() as im comparing Strings not ints 

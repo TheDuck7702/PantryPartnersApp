@@ -15,4 +15,6 @@ void setup(){
 
 void draw(){
   background(0);
+
+  image(manImgGreen, 400, 30);
 }
