@@ -1,6 +1,6 @@
 import g4p_controls.*;
 
-
+Community c;
 
 PImage manImgGreen;
 PImage manImgYellow;
