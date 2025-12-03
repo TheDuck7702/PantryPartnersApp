@@ -1,8 +1,16 @@
 import g4p_controls.*;
 
+PImage manImgGreen;
+
 void setup(){
-  size(600, 800);
+  //gui
+  size(1000, 1200);
   createGUI();
+  
+  //init imgs
+  manImgGreen = loadImage("homeless_guy.png");
+  //manImgYellow = loadImage();
+  //manImgRed = loadImage(); 
 }
 
 void draw(){
