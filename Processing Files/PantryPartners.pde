@@ -1,4 +1,12 @@
 import g4p_controls.*;
+PImage manImgGreen;
+PImage manImgYellow;
+PImage manImgRed;
+  
+PImage womenImgGreen;
+PImage womenImgYellow;
+PImage womenImgRed;
+
 
 // GLOBAL OBJECTS
 Community c;
@@ -20,6 +28,7 @@ void setup() {
 
   // food donor 
   donor = new foodDonor();
+  
 }
 
 //Try out weather with keyboard
@@ -28,19 +37,27 @@ void keyPressed() {
   if (key == '2') weatherSystem.setWeather(1); // Cloudy
   if (key == '3') weatherSystem.setWeather(2); // Rainy
   if (key == '4') weatherSystem.setWeather(3); // Snowy
+  
+  manImgYellow = loadImage("manImgYellow.png");
+  manImgRed = loadImage("manImgRed.png");
+    
+  womenImgGreen = loadImage("womenImgGreen.png");
+  womenImgYellow = loadImage("womenImgYellow.png");
+  womenImgRed = loadImage("womenImgRed.png");
 }
 
 void draw() {
   //clear main sketch window
   background(0);
   
+
   // draw weather background + particles
   weatherSystem.animateWeather();
 
   //update food stock based on current weather
   donor.updateStock(selectedWeatherName);
 
-  //c.drawHomeless();
+  c.drawHomeless();
 
   ////simple HUD
   //fill(0, 150);
