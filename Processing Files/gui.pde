@@ -18,46 +18,42 @@ synchronized public void GUIWindowDraw(PApplet appc, GWinData data) { //_CODE_:G
   appc.background(230);
 } //_CODE_:GUIWindow:359935:
 
-public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
-  println("openOrClosed - GCheckbox >> GEvent." + event + " @ " + millis());
-} //_CODE_:openOrClosed1:449196:
-
 public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:376609:
-  println("weather - GDropList >> GEvent." + event + " @ " + millis());
 
-  if (event == GEvent.CHANGED) {
-    String selectedWeather = source.getSelectedText();
-
-    // update global string used by foodDonor
-    selectedWeatherName = selectedWeather;
-
-    int type = 0; // default Sunny
-    if (selectedWeather.equals("Sunny")) {
-      type = 0;
-    } 
-    else if (selectedWeather.equals("Cloudy")) {
-      type = 1;
-    } 
-    else if (selectedWeather.equals("Rainy")) {
-      type = 2;
-    } 
-    else if (selectedWeather.equals("Snowy")) {
-      type = 3;
-    }
-
-    // update Weather object
-    weatherSystem.setWeather(type);
+  String selectedWeather = source.getSelectedText();
+  // update global string used by foodDonor
+  selectedWeatherName = selectedWeather;
+  
+  int type = 0; // default Sunny
+  if (selectedWeather.equals("Sunny")) {
+    type = 0;
+  } 
+  else if (selectedWeather.equals("Cloudy")) {
+    type = 1;
+  } 
+  else if (selectedWeather.equals("Rainy")) {
+    type = 2;
+  } 
+  else if (selectedWeather.equals("Snowy")) {
+    type = 3;
   }
-} //_CODE_:weather:376609:
+
+  // update Weather object
+  weatherSystem.setWeather(type);
+}
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
   println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
-  getControllerValues();
+  float value = maxPeopleInLine.getValueF();
 } //_CODE_:maxPeopleInLine:800754:
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:button1:515551:
+
+public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
+  println("openOrClosed - GCheckbox >> GEvent." + event + " @ " + millis());
+} //_CODE_:openOrClosed1:449196:
 
 public void openOrClosedBox2(GCheckbox source, GEvent event) { //_CODE_:openOrClosed2:716764:
   println("openOrClosed2 - GCheckbox >> GEvent." + event + " @ " + millis());
