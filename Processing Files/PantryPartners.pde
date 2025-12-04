@@ -43,7 +43,7 @@ void setup() {
 //GRID//////////////////////////////////////////
 void drawGrid() {
   int spacing = 10;      // small grid: every 20 px
-  int labelStep = 100;   // put numbers every 100 px
+  int labelStep = 50;   // put numbers every 100 px
 
   pushStyle();
 
