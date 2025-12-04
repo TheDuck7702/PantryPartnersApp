@@ -43,14 +43,15 @@ class Community { //homeless people
   void drawHomeless() {
     //to pick img
     if ( this.hungerLvl <=3 ){  //RED
-      if (gender.equals("man")) {  //i had to use .equals() as im comparing Strings not ints 
+      if (gender.equals("man")) {
         //draw GREEN image at xPos yPos of MAN
-        image(manImgGreen, this.xPos, this.yPos, 83, 207);
+        image(manImgGreen, this.xPos, this.yPos, 73, 197);
+        
       }
       else{
         //draw GREEN image at xPos yPos of women
         
-        image(womenImgGreen, this.xPos, this.yPos, 83, 207);
+        image(womenImgGreen, this.xPos, this.yPos, 73, 197);
       }
     }
     
