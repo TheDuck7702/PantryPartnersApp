@@ -9,7 +9,7 @@ int foodStock = 100;
 String selectedWeatherName = "Sunny"; 
 
 void setup() {
-  size(1000, 1200);
+  size(1000, 800);
   createGUI();
 
   // one example community member
@@ -29,8 +29,7 @@ void draw() {
   //update food stock based on current weather
   donor.updateStock(selectedWeatherName);
 
-  //draw community on top
-  c.drawHomeless();
+  //c.drawHomeless();
 
   ////simple HUD
   //fill(0, 150);

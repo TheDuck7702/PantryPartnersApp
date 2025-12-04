@@ -43,19 +43,19 @@ class Weather {
     }
     else if (this.weatherType == 1) {   // CLOUDY
       image(cloudyBG, 0, 0, width, height);
-      cloudy();
+      Cloudy();
     }
     else if (this.weatherType == 2) {   // RAINY
       image(rainyBG, 0, 0, width, height);
-      rainy();
+      Rainy();
     }
     else if (this.weatherType == 3) {   // SNOWY
       image(snowyBG, 0, 0, width, height);
-      snowy();
+      Snowy();
     }
   }
 
-  void cloudy() {
+  void Cloudy() {
     for (int i = 0; i < n; i++) {
       fill(255);
       circle(this.particles[i].x, this.particles[i].y, 3);
@@ -66,7 +66,7 @@ class Weather {
     }
   }
 
-  void rainy() {
+  void Rainy() {
     for (int i = 0; i < n; i++) {
       float y = random(8, 20);
 
@@ -81,7 +81,7 @@ class Weather {
     }
   }
 
-  void snowy() {
+  void Snowy() {
     for (int i = 0; i < n; i++) {
       fill(255);
       circle(this.particles[i].x, this.particles[i].y, 4);

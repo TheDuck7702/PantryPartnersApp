@@ -45,34 +45,34 @@ class Community { //homeless people
     if ( this.hungerLvl <=3 ){  //RED
       if (gender.equals("man")) {  //i had to use .equals() as im comparing Strings not ints 
         //draw GREEN image at xPos yPos of MAN
-        image(manImgGreen, this.xPos, this.yPos);
+        image(manImgGreen, this.xPos, this.yPos, 83, 207);
       }
       else{
         //draw GREEN image at xPos yPos of women
         
-        image(womenImgGreen, this.xPos, this.yPos);
+        image(womenImgGreen, this.xPos, this.yPos, 83, 207);
       }
     }
     
     else if ( this.hungerLvl <= 5 ) {   //YELLOW
       if ( gender.equals("man")) {
         //draw YELLOW image at xPos yPos of MAN
-        image(manImgYellow, this.xPos, this.yPos);
+        image(manImgYellow, this.xPos, this.yPos, 73, 197);
       }
       else {
         //draw of YELLOW image at xPos yPos of women
-        image(womenImgYellow, this.xPos, this.yPos);
+        image(womenImgYellow, this.xPos, this.yPos, 73, 197);
       }
     }
     
     else {     //this.hungerlvl <= 10    //RED
       if ( gender.equals("man") ) {
         //draw RED image at xPos yPos of MAN
-        image(manImgRed, this.xPos, this.yPos);
+        image(manImgRed, this.xPos, this.yPos, 73, 197);
       }
       else {
         //draw RED image at xPos yPos of women
-        image(womenImgRed, this.xPos, this.yPos);
+        image(womenImgRed, this.xPos, this.yPos, 73, 197);
       }
     }
   }
