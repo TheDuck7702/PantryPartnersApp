@@ -1,36 +1,24 @@
 import g4p_controls.*;
+PImage manImgGreen;
 
 Community c;
-//test edit q
-
-PImage manImgGreen;
-PImage manImgYellow;
-PImage manImgRed;
-
-PImage womanImgGreen;
-PImage womanImgYellow;
-PImage womanImgRed;
 
 void setup(){
   //gui
   size(1000, 1200);
   createGUI();
-  
-  //init imgs
+  c = new Community(50, 10); // spawns 1 tweaker
+                             //tweaker too large need to resize
+                             //someome make thhe building class
   manImgGreen = loadImage("homeless_guy.png");
-  manImgYellow = loadImage("manImgYellow.png");
-  manImgRed = loadImage("manImgRed.png");
+
   
-  womanImgGreen = loadImage("womanImgGreen.png");
-  womanImgYellow = loadImage("womanImgYellow.png");
-  womanImgRed = loadImage("womanImgRed.png");
-  
-  //manImgYellow = loadImage();
-  //manImgRed = loadImage(); 
+
+  //c.drawHomeless();
 }
 
 void draw(){
-  background(0);
-
-  image(manImgGreen, 400, 30);
+  //background(0);
+  c.drawHomeless(); 
+  //image(manImgGreen, 200, 200);
 }
