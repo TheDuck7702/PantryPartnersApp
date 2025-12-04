@@ -38,7 +38,7 @@ class Weather {
   void animateWeather() {
     noStroke();
 
-    if (this.weatherType == 0) {        // SUNNY, no particles
+    if (this.weatherType == 0) {       
       image(sunnyBG, 0, 0, width, height);
     }
     else if (this.weatherType == 1) {   // CLOUDY
