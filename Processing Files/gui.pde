@@ -23,9 +23,28 @@ public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrCl
 } //_CODE_:openOrClosed1:449196:
 
 public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:376609:
-  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
-  String selectedWeather = source.getSelectedText();
-  
+  println("weather - GDropList >> GEvent." + event + " @ " + millis());
+
+  if (event == GEvent.CHANGED) {
+    String selectedWeather = source.getSelectedText();
+
+    // update global string used by foodDonor
+    selectedWeatherName = selectedWeather;
+
+    int type = 0; // default Sunny
+    if (selectedWeather.equals("Sunny")) {
+      type = 0;
+    } else if (selectedWeather.equals("Cloudy")) {
+      type = 1;
+    } else if (selectedWeather.equals("Rainy")) {
+      type = 2;
+    } else if (selectedWeather.equals("Snowy")) {
+      type = 3;
+    }
+
+    // update Weather object
+    weatherSystem.setWeather(type);
+  }
 } //_CODE_:weather:376609:
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
