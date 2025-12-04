@@ -40,15 +40,43 @@ void setup() {
   
 }
 
-//Try out weather with keyboard
-void keyPressed() {
-  if (key == '1') weatherSystem.setWeather(0); // Sunny
-  if (key == '2') weatherSystem.setWeather(1); // Cloudy
-  if (key == '3') weatherSystem.setWeather(2); // Rainy
-  if (key == '4') weatherSystem.setWeather(3); // Snowy
-  
+//GRID//////////////////////////////////////////
+void drawGrid() {
+  int spacing = 10;      // small grid: every 20 px
+  int labelStep = 100;   // put numbers every 100 px
 
+  pushStyle();
+
+  // grid lines
+  stroke(0);
+  strokeWeight(1);
+  noFill();
+  textAlign(LEFT, TOP);
+  textSize(15);
+  fill(0);   // label colour
+
+  // vertical lines + x labels
+  for (int x = 0; x <= width; x += spacing) {
+    line(x, 0, x, height);
+
+    if (x % labelStep == 0) {
+      text(x, x + 1.5, 2);   // label near the top
+    }
+  }
+
+  // horizontal lines + y labels
+  for (int y = 0; y <= height; y += spacing) {
+    line(0, y, width, y);
+
+    if (y % labelStep == 0) {
+      text(y, 2, y + 1.5);   // label near the left
+    }
+  }
+
+  popStyle();
 }
+
+//////////////////////////////////////////
 
 void draw() {
   //clear main sketch window
@@ -57,17 +85,13 @@ void draw() {
 
   // draw weather background + particles
   weatherSystem.animateWeather();
+  
+  //draw grid
+  drawGrid();   
 
   //update food stock based on current weather
   donor.updateStock(selectedWeatherName);
 
   c.drawHomeless();
 
-  ////simple HUD
-  //fill(0, 150);
-  //rect(10, 10, 220, 60);
-  //fill(255);
-  //textSize(14);
-  //text("Weather: " + selectedWeatherName, 20, 30);
-  //text("Food stock: " + foodStock, 20, 50);
 }
