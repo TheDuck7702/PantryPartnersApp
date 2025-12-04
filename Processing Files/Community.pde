@@ -6,12 +6,15 @@ class Community { //homeless people
   float hungerLvl; // 1-3 green. 3-5 yellow. 5-10 red. 
   float waitTime;
   float angerLvl; // more wait time more anger
+  float targetx; // so the objects know where to move
+  float targety;
   float xPos, yPos; // starts under -1000 so they would walk up 
+  int windowNumber; // to chose the target x 
+  int posInLine; // to chose the target y
   String gender; // diff imgs for man or women
   boolean isServed; //boolean true to start the walk away animation .
                     //If false it will move the line up starting from -1000. 
                     
-  
   //Constucter
   Community(float xPos, float yPos ) {
     this.hungerLvl = int(random(1,10));
@@ -21,6 +24,20 @@ class Community { //homeless people
     this.xPos = xPos;
     this.yPos = yPos; 
     this.gender = genders[int(random(2))];
+    this.windowNumber = int(random(2))+1;
+    this.posInLine = int(random(0, 5));
+    
+    
+    //calc which target x and target y form the posInLine and windowNumber. done in constructor bc so each homeless guy immediately knows the target x and y.
+    if (this.windowNumber == 1) {
+      this.targetx = 160;
+      this.targety = 430 - this.posInLine * 30;
+    }
+    else   { //(this.windowNumber == 2) add teh window 3 and 4 coords
+      this.targetx = 360;
+      this.targety = 430 - this.posInLine * 30;
+    }
+    
   }
   
   //Methods
@@ -64,7 +81,15 @@ class Community { //homeless people
   
   //next method:
   void moveHomeless() {
+    float speed = 2.0; // so 2 pixals per frame
     
+    if(abs(xPos - targetx) > 1) {
+      xPos += (targetx - xPos) * 0.05;
+    }
+    
+    if(abs(yPos - targety) > 1) {
+      yPos += (targety - yPos) * 0.05;
+    }
     
   }
 }

@@ -1,4 +1,6 @@
 import g4p_controls.*;
+
+//images
 PImage manImgGreen;
 PImage manImgYellow;
 PImage manImgRed;
@@ -7,9 +9,8 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-
 // GLOBAL OBJECTS
-Community c;
+Community[] people;
 Weather weatherSystem;
 foodDonor donor;
 
@@ -29,15 +30,32 @@ void setup() {
   //init imgs
   manImgYellow = loadImage("manImgYellow.png");
   manImgRed = loadImage("manImgRed.png");
-  manImgGreen = loadImage("manImgGreen");
+  manImgGreen = loadImage("manImgGreen.png");
     
   womenImgGreen = loadImage("womenImgGreen.png");
   womenImgYellow = loadImage("womenImgYellow.png");
   womenImgRed = loadImage("womenImgRed.png");
   
   // one example community member
-  c = new Community(50, 500);
   
+  int totalPeople = 10; //change this one to the gui slider output
+  
+  //c3 = new Community(xHomeless+eNumb, 500,3);
+  //c2 = new Community(xHomeless+eNumb, 470,5);
+  //c = new Community(xHomeless+eNumb, 410,10);
+ // c1 = new Community(xHomeless+eNumb, 440,3);
+  
+  //c4 = new Community(xHomeless+eNumb+200, 410,3);
+  //c5 = new Community(xHomeless+eNumb+200, 440,10);
+  //c6 = new Community(xHomeless+eNumb+200, 470,5);
+  //c7 = new Community(xHomeless+eNumb+200, 500,3);
+  
+  people = new Community[totalPeople];
+  for (int i = 0; i < totalPeople; i++) {
+    float startx = 500;
+    float starty = 1000; 
+    people[i] = new Community(startx, starty); 
+  }
 }
 
 //GRID//////////////////////////////////////////
@@ -64,6 +82,7 @@ void drawGrid() {
     }
   }
 
+
   // horizontal lines + y labels
   for (int y = 0; y <= height; y += spacing) {
     line(0, y, width, y);
@@ -75,6 +94,7 @@ void drawGrid() {
 
   popStyle();
 }
+
 
 //////////////////////////////////////////
 
@@ -91,7 +111,10 @@ void draw() {
 
   //update food stock based on current weather
   donor.updateStock(selectedWeatherName);
-
-  c.drawHomeless();
-
+  
+  //move and draw all people
+  for (int i = 0; i < people.length; i++) {
+    people[i].moveHomeless();
+    people[i].drawHomeless();
+  }
 }
