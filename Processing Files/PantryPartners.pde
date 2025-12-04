@@ -43,7 +43,7 @@ void setup() {
   closedSign = loadImage("closedSignImg.png");
     
   // one example community member
-  c = new Community(50,   500);
+  c = new Community(50, 500);
   
 }
 
