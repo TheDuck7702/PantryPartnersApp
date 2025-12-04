@@ -1,11 +1,5 @@
 class Community { //homeless people
-  PImage manImgGreen;
-  PImage manImgYellow;
-  PImage manImgRed;
-  
-  PImage womenImgGreen;
-  PImage womenImgYellow;
-  PImage womenImgRed;
+
   
   String[] genders = {"man", "women"};  //for random man or women generator
   //Fields
@@ -24,18 +18,10 @@ class Community { //homeless people
     this.waitTime = 0;
     this.angerLvl = 0;
     this.isServed = false;  
-    this.xPos = xPos; //600;
-    this.yPos = yPos; //-1200;
+    this.xPos = xPos;
+    this.yPos = yPos; 
     this.gender = genders[int(random(2))];
     
-    //init imgs
-    manImgGreen = loadImage("homeless_guy.png");
-    manImgYellow = loadImage("manImgYellow.png");
-    manImgRed = loadImage("manImgRed.png");
-    
-    womenImgGreen = loadImage("womenImgGreen.png");
-    womenImgYellow = loadImage("womenImgYellow.png");
-    womenImgRed = loadImage("womenImgRed.png");
     
   }
   

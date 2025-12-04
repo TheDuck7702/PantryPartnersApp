@@ -20,14 +20,25 @@ void setup() {
   size(1000, 800);
   createGUI();
 
-  // one example community member
-  c = new Community(50, 900);
+
 
   // start with Sunny weather: 0 = Sunny, 1 = Cloudy, 2 = Rainy, 3 = Snowy
   weatherSystem = new Weather(0);
 
   // food donor 
   donor = new foodDonor();
+  
+  //init imgs
+  manImgYellow = loadImage("manImgYellow.png");
+  manImgRed = loadImage("manImgRed.png");
+  manImgGreen = loadImage("manImgGreen");
+    
+  womenImgGreen = loadImage("womenImgGreen.png");
+  womenImgYellow = loadImage("womenImgYellow.png");
+  womenImgRed = loadImage("womenImgRed.png");
+  
+  // one example community member
+  c = new Community(50,   500);
   
 }
 
@@ -38,12 +49,7 @@ void keyPressed() {
   if (key == '3') weatherSystem.setWeather(2); // Rainy
   if (key == '4') weatherSystem.setWeather(3); // Snowy
   
-  manImgYellow = loadImage("manImgYellow.png");
-  manImgRed = loadImage("manImgRed.png");
-    
-  womenImgGreen = loadImage("womenImgGreen.png");
-  womenImgYellow = loadImage("womenImgYellow.png");
-  womenImgRed = loadImage("womenImgRed.png");
+
 }
 
 void draw() {
