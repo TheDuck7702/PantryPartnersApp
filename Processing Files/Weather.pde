@@ -90,9 +90,15 @@ class Weather {
       // this.particles[i].add(random x speed, random y speed);
       this.particles[i].add(random(-0.5, 0.5), random(3, 4.5));
 
-      if (this.particles[i].x < 0)        this.particles[i].x = width;
-      if (this.particles[i].x > width)    this.particles[i].x = 0;
-      if (this.particles[i].y >= height)  this.particles[i].y = 0;
+      if (this.particles[i].x < 0){
+        this.particles[i].x = width;
+      }
+      if (this.particles[i].x > width){
+        this.particles[i].x = 0;
+      }
+      if (this.particles[i].y >= height){
+        this.particles[i].y = 0;
+      }
     }
   }
 }
