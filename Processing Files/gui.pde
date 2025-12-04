@@ -24,6 +24,8 @@ public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrCl
 
 public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:376609:
   println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
+  String selectedWeather = source.getSelectedText();
+  
 } //_CODE_:weather:376609:
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:

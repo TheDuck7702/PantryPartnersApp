@@ -3,6 +3,8 @@ PImage manImgGreen;
 
 Community c;
 
+int foodStock = 100;
+
 void setup(){
   //gui
   size(1000, 1200);
