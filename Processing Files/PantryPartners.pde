@@ -20,8 +20,6 @@ void setup() {
   size(1000, 800);
   createGUI();
 
-
-
   // start with Sunny weather: 0 = Sunny, 1 = Cloudy, 2 = Rainy, 3 = Snowy
   weatherSystem = new Weather(0);
 
@@ -38,7 +36,7 @@ void setup() {
   womenImgRed = loadImage("womenImgRed.png");
   
   // one example community member
-  c = new Community(50,   500);
+  c = new Community(50, 500);
   
 }
 

@@ -21,8 +21,6 @@ class Community { //homeless people
     this.xPos = xPos;
     this.yPos = yPos; 
     this.gender = genders[int(random(2))];
-    
-    
   }
   
   //Methods
@@ -65,4 +63,8 @@ class Community { //homeless people
   }
   
   //next method:
+  void moveHomeless() {
+    
+    
+  }
 }
