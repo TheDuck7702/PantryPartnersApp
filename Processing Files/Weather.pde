@@ -26,66 +26,69 @@ class Weather {
   PVector[] createCoordinates() {
     this.particles = new PVector[this.n];
     for (int i = 0; i < n; i++) {
-      if (this.weatherType == 2) { // rainy: spawn near top
-        this.particles[i] = new PVector(random(0, width), random(0, 100));
-      } else {
-        this.particles[i] = new PVector(random(0, width), random(0, height));
+      if (this.weatherType == 2) { // rain
+        this.particles[i] = new PVector(random(0, width), random(-height, 0));
+      } 
+      else {
+        this.particles[i] = new PVector(
+          random(0, width),
+          random(0, height)
+          );
       }
     }
     return this.particles;
   }
 
   void animateWeather() {
+
     noStroke();
 
-    if (this.weatherType == 0) {       
+    if (this.weatherType == 0) {
       image(sunnyBG, 0, 0, width, height);
-    }
+    } 
     else if (this.weatherType == 1) {   // CLOUDY
       image(cloudyBG, 0, 0, width, height);
-      Cloudy();
-    }
+    } 
     else if (this.weatherType == 2) {   // RAINY
       image(rainyBG, 0, 0, width, height);
       Rainy();
-    }
+    } 
     else if (this.weatherType == 3) {   // SNOWY
       image(snowyBG, 0, 0, width, height);
       Snowy();
     }
   }
 
-  void Cloudy() {
-    for (int i = 0; i < n; i++) {
-      fill(255);
-      circle(this.particles[i].x, this.particles[i].y, 3);
-      this.particles[i].add(random(0.5, 1.5), random(0.5, 1.5));
-
-      if (this.particles[i].x >= width)  this.particles[i].x = 0;
-      if (this.particles[i].y >= height) this.particles[i].y = 0;
-    }
-  }
 
   void Rainy() {
-    for (int i = 0; i < n; i++) {
-      float y = random(8, 20);
+  for (int i = 0; i < n; i++) {
+    PVector p = this.particles[i];
 
-      fill(0, 0, 200);
-      ellipse(this.particles[i].x, this.particles[i].y, 2, y);
-      this.particles[i].add(0, y);
+    //random speed each frame
+    float speed = random(20, 30);
 
-      if (this.particles[i].y >= height) {
-        this.particles[i].y = 0;
-        this.particles[i].x = random(0, width);
-      }
+    fill(98, 149, 209);   // rain colour
+    noStroke();
+    ellipse(p.x, p.y, 2, 8);   // thin vertical raindrop
+
+    // fall down
+    p.y += speed;
+
+    // when it goes off the bottom, reset above the screen
+    if (p.y > height + 20) {
+      p.y = random(-100, 0);
+      p.x = random(0, width);
     }
   }
+}
 
   void Snowy() {
     for (int i = 0; i < n; i++) {
       fill(255);
       circle(this.particles[i].x, this.particles[i].y, 4);
-      this.particles[i].add(random(-0.5, 0.5), random(0.5, 1.5));
+      
+      // this.particles[i].add(random x speed, random y speed);
+      this.particles[i].add(random(-0.5, 0.5), random(3, 4.5));
 
       if (this.particles[i].x < 0)        this.particles[i].x = width;
       if (this.particles[i].x > width)    this.particles[i].x = 0;

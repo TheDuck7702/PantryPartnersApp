@@ -22,7 +22,18 @@ void setup() {
   donor = new foodDonor();
 }
 
+//Try out weather with keyboard
+void keyPressed() {
+  if (key == '1') weatherSystem.setWeather(0); // Sunny
+  if (key == '2') weatherSystem.setWeather(1); // Cloudy
+  if (key == '3') weatherSystem.setWeather(2); // Rainy
+  if (key == '4') weatherSystem.setWeather(3); // Snowy
+}
+
 void draw() {
+  //clear main sketch window
+  background(0);
+  
   // draw weather background + particles
   weatherSystem.animateWeather();
 

@@ -34,11 +34,14 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
     int type = 0; // default Sunny
     if (selectedWeather.equals("Sunny")) {
       type = 0;
-    } else if (selectedWeather.equals("Cloudy")) {
+    } 
+    else if (selectedWeather.equals("Cloudy")) {
       type = 1;
-    } else if (selectedWeather.equals("Rainy")) {
+    } 
+    else if (selectedWeather.equals("Rainy")) {
       type = 2;
-    } else if (selectedWeather.equals("Snowy")) {
+    } 
+    else if (selectedWeather.equals("Snowy")) {
       type = 3;
     }
 
