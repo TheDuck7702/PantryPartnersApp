@@ -7,6 +7,11 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
+Boolean clicked1 = false;
+Boolean clicked2 = false;
+Boolean clicked3 = false;
+Boolean clicked4 = false;
+PImage closedSign;
 
 // GLOBAL OBJECTS
 Community c;
@@ -20,8 +25,6 @@ void setup() {
   size(1000, 800);
   createGUI();
 
-
-
   // start with Sunny weather: 0 = Sunny, 1 = Cloudy, 2 = Rainy, 3 = Snowy
   weatherSystem = new Weather(0);
 
@@ -31,12 +34,14 @@ void setup() {
   //init imgs
   manImgYellow = loadImage("manImgYellow.png");
   manImgRed = loadImage("manImgRed.png");
-  manImgGreen = loadImage("manImgGreen");
+  manImgGreen = loadImage("manImgGreen.png");
     
   womenImgGreen = loadImage("womenImgGreen.png");
   womenImgYellow = loadImage("womenImgYellow.png");
   womenImgRed = loadImage("womenImgRed.png");
   
+  closedSign = loadImage("closedSignImg.png");
+    
   // one example community member
   c = new Community(50,   500);
   
@@ -95,5 +100,19 @@ void draw() {
   donor.updateStock(selectedWeatherName);
 
   c.drawHomeless();
+
+  
+  if (clicked1) {
+    image(closedSign, 150, 370, 110, 110);
+  }
+  if (clicked2) {
+    image(closedSign, 50, 50, 300, 300);
+  }
+  if (clicked3) {
+    image(closedSign, 50, 50, 300, 300);
+  }
+  if (clicked4) {
+    image(closedSign, 50, 50, 300, 300);
+  }
 
 }
