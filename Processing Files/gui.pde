@@ -43,27 +43,6 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 }
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
-  println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
-  float value = maxPeopleInLine.getValueF();
-  
-  //set total people to the slider value 
-  totalPeople = int(value)+1; // to account for the 0? with 0,1,2,3,4,5...
-  
-  //makes a new array of community objects so it sets the size of the array with how many people we have via the sider 
-  people = new Community[totalPeople];
-  
-  //loops throught all index of the array
-  for(int i = 0; i < totalPeople; i++) {
-    //sets coords of off screen starting pos so they walk out
-    float startx = 500;
-    float starty = 1000;
-    
-    //assigns the starting coords to each index in the array
-    people[i] = new Community(startx,starty);
-  }
-  println("the slider shows", int(value), "people");
-  println("the totallPeople is ", totalPeople);
- //_CODE_:maxPeopleInLine:800754:
 
   int totalPeople = maxPeopleInLine.getValueI();  
   rebuildPeopleArray(totalPeople);
@@ -71,7 +50,7 @@ public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
-}
+} //_CODE_:button1:515551:
 
 public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
   clicked1 = !clicked1;
@@ -79,7 +58,7 @@ public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrCl
 
 public void openOrClosedBox2(GCheckbox source, GEvent event) { //_CODE_:openOrClosed2:716764:
   clicked2 = !clicked2;
-}
+} //_CODE_:openOrClosed2:716764:
 
 public void openOrClosedBox3(GCheckbox source, GEvent event) { //_CODE_:openOrClosed3:914672:
   clicked3 = !clicked3;
@@ -87,11 +66,11 @@ public void openOrClosedBox3(GCheckbox source, GEvent event) { //_CODE_:openOrCl
 
 public void openOrClosedBox4(GCheckbox source, GEvent event) { //_CODE_:openOrClosed4:296472:
   clicked4 = !clicked4;
-}
+} //_CODE_:openOrClosed4:296472:
 
-public void startHungerControl(GDropList source, GEvent event) { //_CODE_:dropList1:810305:
-  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
-} //_CODE_:dropList1:810305:
+public void showFoodBox(GCheckbox source, GEvent event) { //_CODE_:showFood:950188:
+  println("showFood - GCheckbox >> GEvent." + event + " @ " + millis());
+} //_CODE_:showFood:950188:
 
 
 
@@ -161,18 +140,18 @@ public void createGUI(){
   openOrClosed4.setOpaque(false);
   openOrClosed4.addEventHandler(this, "openOrClosedBox4");
   openOrClosed4.setSelected(true);
-  dropList1 = new GDropList(GUIWindow, 300, 60, 90, 80, 3, 10);
-  dropList1.setItems(loadStrings("list_810305"), 0);
-  dropList1.addEventHandler(this, "startHungerControl");
-  startHunger = new GLabel(GUIWindow, 212, 49, 80, 40);
-  startHunger.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  startHunger.setText("Starting Hunger Level");
-  startHunger.setOpaque(false);
   instructions = new GLabel(GUIWindow, 0, 15, 400, 20);
   instructions.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   instructions.setText("You can adjust the following controls to alternate the outcome");
   instructions.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   instructions.setOpaque(false);
+  showFood = new GCheckbox(GUIWindow, 220, 60, 150, 20);
+  showFood.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  showFood.setText("Show Food Supply?");
+  showFood.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  showFood.setOpaque(false);
+  showFood.addEventHandler(this, "showFoodBox");
+  showFood.setSelected(true);
   GUIWindow.loop();
 }
 
@@ -188,6 +167,5 @@ GButton button1;
 GCheckbox openOrClosed2; 
 GCheckbox openOrClosed3; 
 GCheckbox openOrClosed4; 
-GDropList dropList1; 
-GLabel startHunger; 
 GLabel instructions; 
+GCheckbox showFood; 

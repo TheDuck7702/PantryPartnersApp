@@ -17,7 +17,6 @@ Boolean clicked4 = false;
 
 PImage closedSign;
 
-
 PImage foodStockImg;
 
 // GLOBAL OBJECTS
