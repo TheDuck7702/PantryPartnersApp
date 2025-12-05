@@ -44,7 +44,6 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
   println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
-<<<<<<< HEAD
   float value = maxPeopleInLine.getValueF();
   
   //set total people to the slider value 
@@ -63,13 +62,8 @@ public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_
     people[i] = new Community(startx,starty);
   }
   println("the slider shows", int(value), "people");
-  println("the totallPeople is ", totalPeople);
-} //_CODE_:maxPeopleInLine:800754:
-=======
-  int totalPeople = maxPeopleInLine.getValueI();  
-  rebuildPeopleArray(totalPeople);
+  println("the total People is ", totalPeople);
 }
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());

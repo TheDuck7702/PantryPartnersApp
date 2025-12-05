@@ -9,7 +9,7 @@ class foodDonor {
   
   String updateText = "";
   int updateStartTime = 0;
-  int updateDuration = 3500; // Text stays on screen for 4 seconds
+  int updateDuration = 3500; // Text stays on screen for 3.5 seconds
   
   int can1;
   int can2;
