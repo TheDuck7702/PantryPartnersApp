@@ -9,15 +9,17 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-<<<<<<< HEAD
-=======
+
+
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
 Boolean clicked4 = false;
+
 PImage closedSign;
 
->>>>>>> 0dcd5adcf0de0e414b277de255d7cad54795123d
+PImage foodStockImg;
+
 // GLOBAL OBJECTS
 Community[] people;
 Weather weatherSystem;
@@ -46,6 +48,8 @@ void setup() {
   womenImgRed = loadImage("womenImgRed.png");
   
   closedSign = loadImage("closedSignImg.png");
+  
+  foodStockImg = loadImage("foodStockImg.png");
     
   // one example community member
   
@@ -121,17 +125,17 @@ void draw() {
   drawGrid();   
 
   //update food stock based on current weather
-  donor.updateStock(selectedWeatherName);
-<<<<<<< HEAD
+  donor.updateStock();
+  donor.drawFoodStock();
+
   
   //move and draw all people
   for (int i = 0; i < people.length; i++) {
     people[i].moveHomeless();
     people[i].drawHomeless();
   }
-=======
 
-  c.drawHomeless();
+ // c.drawHomeless();
 
   
   if (clicked1) {
@@ -147,5 +151,4 @@ void draw() {
     image(closedSign, 50, 50, 300, 300);
   }
 
->>>>>>> 0dcd5adcf0de0e414b277de255d7cad54795123d
 }

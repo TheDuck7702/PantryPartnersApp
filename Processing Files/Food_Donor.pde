@@ -13,43 +13,33 @@ class foodDonor {
     
   }
   
-  void updateStock(String weather){
-    
+  void updateStock(){
     if(millis() >= nextDonationTime){
-
-     this.donationAmount = generateDonationAmount(weather);
-     
-     foodStock += this.donationAmount;
-     
-     nextDonation();
-      
+     this.donationAmount = generateDonationAmount(selectedWeatherName);    
+     foodStock += this.donationAmount;   
+     nextDonation();      
     }
     
   }
   
   
   void nextDonation(){
-    
     nextDonationTime = millis() + int(random(minInterval, maxInterval));
     
   }
   
-  int generateDonationAmount(String selectedWeather){
-
+  int generateDonationAmount(String selectedWeatherName){
+    if(selectedWeatherName.equals("Sunny")){
+      return int((random(10, 40)));
+    }
       
-      if(selectedWeather.equals("Sunny")){
-        
-        return int((random(10, 40)));
-        
-      }
-      
-      else if(selectedWeather.equals("Rainy")){
+      else if(selectedWeatherName.equals("Rainy")){
         
         return int((random(5, 25)));
         
       }
       
-      else if(selectedWeather.equals("Cloudy")){
+      else if(selectedWeatherName.equals("Cloudy")){
         
         return int((random(8, 35)));
         
@@ -61,6 +51,11 @@ class foodDonor {
         
       }
         
+    }
+    
+    void drawFoodStock(){
+      image(foodStockImg, 775, 25); 
+      
     }
     
   
