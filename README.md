@@ -15,7 +15,3 @@ People with different hunger amounts will affect the amount of food that each pe
 
 ## Weather Adjusted Factors
 The feature will adjust related factors (wait time, speed, etc) based on the severity of weather conditions (sunny days will be smoother, rainy days will be slower).
-
-## Open or Closed
-This feature will determine whether the food bank is open or closed. It also considers the operation hours of food banks. If it’s closed, people's hunger will build up.
-
