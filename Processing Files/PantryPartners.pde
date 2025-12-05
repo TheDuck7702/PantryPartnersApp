@@ -26,6 +26,7 @@ Weather weatherSystem;
 foodDonor donor;
 
 int foodStock = 100;
+int totalPeople = 5;
 String selectedWeatherName = "Sunny"; 
 
 void setup() {
@@ -50,10 +51,11 @@ void setup() {
   closedSign = loadImage("closedSignImg.png");
   
   foodStockImg = loadImage("foodStockImg.png");
-    
+  
+  rebuildPeopleArray(totalPeople);
   // one example community member
   
-  int totalPeople = 10; //change this one to the gui slider output
+  // int totalPeople = 10; //change this one to the gui slider output
   
   //c3 = new Community(xHomeless+eNumb, 500,3);
   //c2 = new Community(xHomeless+eNumb, 470,5);
@@ -65,11 +67,21 @@ void setup() {
   //c6 = new Community(xHomeless+eNumb+200, 470,5);
   //c7 = new Community(xHomeless+eNumb+200, 500,3);
   
+  //people = new Community[totalPeople];
+  //for (int i = 0; i < totalPeople; i++) {
+  //  float startx = 500;
+  //  float starty = 1000; 
+  //  people[i] = new Community(startx, starty); 
+  //}
+}
+
+void rebuildPeopleArray(int totalPeople) {
   people = new Community[totalPeople];
+
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
-    float starty = 1000; 
-    people[i] = new Community(startx, starty); 
+    float starty = 1000;
+    people[i] = new Community(startx, starty);
   }
 }
 
@@ -115,7 +127,7 @@ void draw() {
   // draw weather background + particles
   weatherSystem.animateWeather();
   
-  //drawGrid();   
+  // drawGrid();   
 
   //update food stock based on current weather
   donor.updateStock();
@@ -136,16 +148,16 @@ void draw() {
 
   
   if (clicked1) {
-    image(closedSign, 150, 370, 110, 110);
+    image(closedSign, 145, 370, 115, 110);
   }
   if (clicked2) {
-    image(closedSign, 50, 50, 300, 300);
+    image(closedSign, 340, 370, 115, 110);
   }
   if (clicked3) {
-    image(closedSign, 50, 50, 300, 300);
+    image(closedSign, 535, 370, 115, 110);
   }
   if (clicked4) {
-    image(closedSign, 50, 50, 300, 300);
+    image(closedSign, 730, 370, 115, 110);
   }
 
 }

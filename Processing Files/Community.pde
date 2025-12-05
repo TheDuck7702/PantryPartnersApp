@@ -92,4 +92,8 @@ class Community { //homeless people
     }
     
   }
+  
+  void clearHomeless() {
+    
+  }
 }
