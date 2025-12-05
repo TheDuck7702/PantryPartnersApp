@@ -9,11 +9,7 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
@@ -21,11 +17,9 @@ Boolean clicked4 = false;
 
 PImage closedSign;
 
-<<<<<<< HEAD
-=======
+
 PImage foodStockImg;
 
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
 // GLOBAL OBJECTS
 Community[] people;
 Weather weatherSystem;
@@ -34,7 +28,6 @@ foodDonor donor;
 int foodStock = 100;
 int totalPeople = 5;
 String selectedWeatherName = "Sunny"; 
-int totalPeople;
 
 void setup() {
   size(1000, 800);
@@ -56,9 +49,7 @@ void setup() {
   womenImgRed = loadImage("womenImgRed.png");
   
   closedSign = loadImage("closedSignImg.png");
-<<<<<<< HEAD
-       
-=======
+
   
   foodStockImg = loadImage("foodStockImg.png");
   
@@ -67,7 +58,6 @@ void setup() {
   
   // int totalPeople = 10; //change this one to the gui slider output
   
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
   //c3 = new Community(xHomeless+eNumb, 500,3);
   //c2 = new Community(xHomeless+eNumb, 470,5);
   //c = new Community(xHomeless+eNumb, 410,10);
@@ -78,12 +68,12 @@ void setup() {
   //c6 = new Community(xHomeless+eNumb+200, 470,5);
   //c7 = new Community(xHomeless+eNumb+200, 500,3);
   
-<<<<<<< HEAD
+
  //totalPeople = 100; //change this one to the gui slider output
 
-  people = new Community[totalPeople];
+  //people = new Community[totalPeople];
   
-=======
+
   //people = new Community[totalPeople];
   //for (int i = 0; i < totalPeople; i++) {
   //  float startx = 500;
@@ -95,7 +85,6 @@ void setup() {
 void rebuildPeopleArray(int totalPeople) {
   people = new Community[totalPeople];
 
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
     float starty = 1000;
@@ -140,16 +129,12 @@ void drawGrid() {
 void draw() {
   //clear main sketch window
   background(0);
-  
+  // drawGrid(); 
 
   // draw weather background + particles
   weatherSystem.animateWeather();
-  
-  // drawGrid();   
-
+    
   //update food stock based on current weather
-<<<<<<< HEAD
-  donor.updateStock(selectedWeatherName);
 
   //move and draw and sort all people :(
   for (int win = 1; win <= 4; win++) {
@@ -169,7 +154,6 @@ void draw() {
   }
 
 
-=======
   donor.updateStock();
   
   //draw food stock stats
@@ -185,7 +169,6 @@ void draw() {
   }
 
  // c.drawHomeless();
->>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
 
   
   if (clicked1) {
