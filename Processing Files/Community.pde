@@ -24,18 +24,26 @@ class Community { //homeless people
     this.xPos = xPos;
     this.yPos = yPos; 
     this.gender = genders[int(random(2))];
-    this.windowNumber = int(random(2))+1;
-    this.posInLine = int(random(0, 5));
+    this.windowNumber = int(random(5));
+    this.posInLine = int(random(0, 6));
     
     
     //calc which target x and target y form the posInLine and windowNumber. done in constructor bc so each homeless guy immediately knows the target x and y.
-    if (this.windowNumber == 1) {
-      this.targetx = 160;
-      this.targety = 430 - this.posInLine * 30;
+    if (this.windowNumber == 1 || this.windowNumber == 0) {
+      this.targetx = 160; 
+      this.targety = 530 - this.posInLine * 30;
     }
-    else   { //(this.windowNumber == 2) add teh window 3 and 4 coords
+    else if(this.windowNumber == 2){ // add teh window 3 and 4 coords
       this.targetx = 360;
-      this.targety = 430 - this.posInLine * 30;
+      this.targety = 530 - this.posInLine * 30;
+    }
+    else if (this.windowNumber == 3) {
+      this.targetx = 560;
+      this.targety = 530 - this.posInLine * 30;
+    }
+    else{
+      this.targetx = 760;
+      this.targety = 530 - this.posInLine * 30;
     }
     
   }
@@ -81,14 +89,14 @@ class Community { //homeless people
   
   //next method:
   void moveHomeless() {
-    float speed = 2.0; // so 2 pixals per frame
+    float speed = 0.05; // so 2 pixals per frame
     
     if(abs(xPos - targetx) > 1) {
-      xPos += (targetx - xPos) * 0.05;
+      xPos += (targetx - xPos) * speed;
     }
     
     if(abs(yPos - targety) > 1) {
-      yPos += (targety - yPos) * 0.05;
+      yPos += (targety - yPos) * speed;
     }
     
   }

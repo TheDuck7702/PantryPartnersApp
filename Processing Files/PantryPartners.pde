@@ -9,15 +9,12 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-<<<<<<< HEAD
-=======
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
 Boolean clicked4 = false;
 PImage closedSign;
 
->>>>>>> 0dcd5adcf0de0e414b277de255d7cad54795123d
 // GLOBAL OBJECTS
 Community[] people;
 Weather weatherSystem;
@@ -25,6 +22,7 @@ foodDonor donor;
 
 int foodStock = 100;
 String selectedWeatherName = "Sunny"; 
+int totalPeople;
 
 void setup() {
   size(1000, 800);
@@ -46,11 +44,7 @@ void setup() {
   womenImgRed = loadImage("womenImgRed.png");
   
   closedSign = loadImage("closedSignImg.png");
-    
-  // one example community member
-  
-  int totalPeople = 10; //change this one to the gui slider output
-  
+       
   //c3 = new Community(xHomeless+eNumb, 500,3);
   //c2 = new Community(xHomeless+eNumb, 470,5);
   //c = new Community(xHomeless+eNumb, 410,10);
@@ -61,7 +55,10 @@ void setup() {
   //c6 = new Community(xHomeless+eNumb+200, 470,5);
   //c7 = new Community(xHomeless+eNumb+200, 500,3);
   
+ //totalPeople = 100; //change this one to the gui slider output
+
   people = new Community[totalPeople];
+  
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
     float starty = 1000; 
@@ -122,16 +119,25 @@ void draw() {
 
   //update food stock based on current weather
   donor.updateStock(selectedWeatherName);
-<<<<<<< HEAD
-  
-  //move and draw all people
-  for (int i = 0; i < people.length; i++) {
-    people[i].moveHomeless();
-    people[i].drawHomeless();
-  }
-=======
 
-  c.drawHomeless();
+  //move and draw and sort all people :(
+  for (int win = 1; win <= 4; win++) {
+    //for loop runs through all 4 windows makes it so we draw in window 1, than window 2 ...
+    for (int pos = 5; pos >= 0; pos --) {
+      //loops through all 5 postions  
+      for (int check = 0; check < people.length; check++) {
+        //if statment checker to insure the index we are on belongs to the current window and the current pos in line
+        Community c = people[check];
+        if (c.windowNumber == win && c.posInLine == pos) {
+          //draw and move the homeless
+          c.moveHomeless();
+          c.drawHomeless();
+        }
+      }
+    }
+  }
+
+
 
   
   if (clicked1) {
@@ -147,5 +153,4 @@ void draw() {
     image(closedSign, 50, 50, 300, 300);
   }
 
->>>>>>> 0dcd5adcf0de0e414b277de255d7cad54795123d
 }

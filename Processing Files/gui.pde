@@ -45,6 +45,24 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
   println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
   float value = maxPeopleInLine.getValueF();
+  
+  //set total people to the slider value 
+  totalPeople = int(value)+1; // to account for the 0? with 0,1,2,3,4,5...
+  
+  //makes a new array of community objects so it sets the size of the array with how many people we have via the sider 
+  people = new Community[totalPeople];
+  
+  //loops throught all index of the array
+  for(int i = 0; i < totalPeople; i++) {
+    //sets coords of off screen starting pos so they walk out
+    float startx = 500;
+    float starty = 1000;
+    
+    //assigns the starting coords to each index in the array
+    people[i] = new Community(startx,starty);
+  }
+  println("the slider shows", int(value), "people");
+  println("the totallPeople is ", totalPeople);
 } //_CODE_:maxPeopleInLine:800754:
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
