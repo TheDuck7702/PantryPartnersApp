@@ -9,7 +9,7 @@ class foodDonor {
   
   String updateText = "";
   int updateStartTime = 0;
-  int updateDuration = 2000;
+  int updateDuration = 3500; // Text stays on screen for 4 seconds
   
   int can1;
   int can2;
@@ -32,7 +32,7 @@ class foodDonor {
      this.can1 += this.canNum;
      this.can2 += this.canNum;
      this.can3 += this.donationAmount - (this.canNum*2);
-     this.updateText = "+" + int(this.donationAmount) + " food donated!";
+     this.updateText = "+" + int(this.donationAmount) + " cans of food donated!";
      this.updateStartTime = millis();
      this.nextDonation();      
     }    
@@ -70,7 +70,7 @@ class foodDonor {
      if(millis() - this.updateStartTime < this.updateDuration){
        fill(0);
        textSize(15);
-       text(this.updateText, 800, 20);
+       text(this.updateText, 770, 20);
      }
     }  
 }

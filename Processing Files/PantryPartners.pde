@@ -75,12 +75,9 @@ void setup() {
 
 //GRID//////////////////////////////////////////
 void drawGrid() {
-  int spacing = 10;      // small grid: every 20 px
-  int labelStep = 50;   // put numbers every 100 px
-
+  int spacing = 10;  
+  int labelStep = 50;   
   pushStyle();
-
-  // grid lines
   stroke(0);
   strokeWeight(1);
   noFill();
@@ -96,8 +93,6 @@ void drawGrid() {
       text(x, x + 1.5, 2);   // label near the top
     }
   }
-
-
   // horizontal lines + y labels
   for (int y = 0; y <= height; y += spacing) {
     line(0, y, width, y);
@@ -110,8 +105,7 @@ void drawGrid() {
   popStyle();
 }
 
-
-//////////////////////////////////////////
+////////////////////////////////////////////
 
 void draw() {
   //clear main sketch window
@@ -121,8 +115,7 @@ void draw() {
   // draw weather background + particles
   weatherSystem.animateWeather();
   
-  //draw grid
-  drawGrid();   
+  //drawGrid();   
 
   //update food stock based on current weather
   donor.updateStock();
