@@ -161,13 +161,6 @@ void draw() {
   donor.updateStockText();
 
   
-  //move and draw all people
-  for (int i = 0; i < people.length; i++) {
-    people[i].moveHomeless();
-    people[i].drawHomeless();
-  }
-
- // c.drawHomeless();
 
   
   if (clicked1) {
@@ -182,5 +175,14 @@ void draw() {
   if (clicked4) {
     image(closedSign, 730, 370, 115, 110);
   }
+  
+    //move and draw all people
+  for (int i = 0; i < people.length; i++) {
+    people[i].moveHomeless();
+    people[i].drawHomeless();
+  }
+
+ // c.drawHomeless();
+
 
 }
