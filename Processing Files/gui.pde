@@ -44,6 +44,7 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
   println("maxPeopleInLine - GCustomSlider >> GEvent." + event + " @ " + millis());
+<<<<<<< HEAD
   float value = maxPeopleInLine.getValueF();
   
   //set total people to the slider value 
@@ -64,30 +65,31 @@ public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_
   println("the slider shows", int(value), "people");
   println("the totallPeople is ", totalPeople);
 } //_CODE_:maxPeopleInLine:800754:
+=======
+  int totalPeople = maxPeopleInLine.getValueI();  
+  rebuildPeopleArray(totalPeople);
+}
+>>>>>>> 896ae9e32fd6705ba0a18975ae534020541ffc6e
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:button1:515551:
+}
 
 public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
-  println("openOrClosed - GCheckbox >> GEvent." + event + " @ " + millis());
   clicked1 = !clicked1;
 }
 
 public void openOrClosedBox2(GCheckbox source, GEvent event) { //_CODE_:openOrClosed2:716764:
-  println("openOrClosed2 - GCheckbox >> GEvent." + event + " @ " + millis());
   clicked2 = !clicked2;
-} //_CODE_:openOrClosed2:716764:
+}
 
 public void openOrClosedBox3(GCheckbox source, GEvent event) { //_CODE_:openOrClosed3:914672:
-  println("openOrClosed3 - GCheckbox >> GEvent." + event + " @ " + millis());
   clicked3 = !clicked3;
-} //_CODE_:openOrClosed3:914672:
+} 
 
 public void openOrClosedBox4(GCheckbox source, GEvent event) { //_CODE_:openOrClosed4:296472:
-  println("openOrClosed4 - GCheckbox >> GEvent." + event + " @ " + millis());
   clicked4 = !clicked4;
-} //_CODE_:openOrClosed4:296472:
+}
 
 public void startHungerControl(GDropList source, GEvent event) { //_CODE_:dropList1:810305:
   println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());

@@ -26,15 +26,7 @@ class Weather {
   PVector[] createCoordinates() {
     this.particles = new PVector[this.n];
     for (int i = 0; i < n; i++) {
-      if (this.weatherType == 2) { // rain
-        this.particles[i] = new PVector(random(0, width), random(-height, 0));
-      } 
-      else {
-        this.particles[i] = new PVector(
-          random(0, width),
-          random(0, height)
-          );
-      }
+        this.particles[i] = new PVector(random(0, width), random(0, height));
     }
     return this.particles;
   }
