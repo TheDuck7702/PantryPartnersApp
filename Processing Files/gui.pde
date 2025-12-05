@@ -43,7 +43,6 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 }
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
-
   int totalPeople = maxPeopleInLine.getValueI();  
   rebuildPeopleArray(totalPeople);
 }
