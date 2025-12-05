@@ -126,7 +126,11 @@ void draw() {
 
   //update food stock based on current weather
   donor.updateStock();
+  
+  //draw food stock stats
   donor.drawFoodStock();
+  
+  donor.updateStockText();
 
   
   //move and draw all people
