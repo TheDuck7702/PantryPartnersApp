@@ -6,8 +6,6 @@ Pantry Partners is an operational support tool designed to help food banks monit
 ## Expected Wait Time:
 This feature will calculate the wait time at any point in line based on people ahead, volunteers available, the speed of distribution, and food availability.
 
-## Number of Volunteers
-Set the number of volunteers for the day through a slider. This will change throughout the day as more volunteers show up and leave. 
 
 ## Food Inventory:
 This feature will show food supply throughout the day. It will decrease as food is given out and increase as food is donated.
@@ -17,7 +15,3 @@ People with different hunger amounts will affect the amount of food that each pe
 
 ## Weather Adjusted Factors
 The feature will adjust related factors (wait time, speed, etc) based on the severity of weather conditions (sunny days will be smoother, rainy days will be slower).
-
-## Open or Closed
-This feature will determine whether the food bank is open or closed. It also considers the operation hours of food banks. If it’s closed, people's hunger will build up.
-
