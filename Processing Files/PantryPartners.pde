@@ -176,13 +176,6 @@ void draw() {
     image(closedSign, 730, 370, 115, 110);
   }
   
-    //move and draw all people
-  for (int i = 0; i < people.length; i++) {
-    people[i].moveHomeless();
-    people[i].drawHomeless();
-  }
-
- // c.drawHomeless();
 
 
 }
