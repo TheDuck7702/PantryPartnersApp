@@ -14,22 +14,37 @@ class Community { //homeless people
   String gender; // diff imgs for man or women
   boolean isServed; //boolean true to start the walk away animation .
                     //If false it will move the line up starting from -1000. 
+
+  int spawnTime;      // when created
+  boolean atSpotOnce; // has reached their line spot at least once
+  int waitStartTime;  // when they first reached their spot
                     
   //Constucter
   Community(float xPos, float yPos ) {
-    this.hungerLvl = int(random(1,10));
+    // start people somewhere between yellow and red (no green people in line)
+    this.hungerLvl = int(random(4, 10));   // 4–5 => yellow, >5 => red
+
     this.waitTime = 0;
     this.angerLvl = 0;
     this.isServed = false;  
     this.xPos = xPos;
     this.yPos = yPos; 
     this.gender = genders[int(random(2))];
-    this.windowNumber = int(random(5));
+
+    // windows 1..4 (not 0..4)
+    this.windowNumber = int(random(1, 5));
     this.posInLine = int(random(0, 6));
-    
+    this.spawnTime = millis();
+    this.atSpotOnce = false;
+    this.waitStartTime = 0;
     
     //calc which target x and target y form the posInLine and windowNumber. done in constructor bc so each homeless guy immediately knows the target x and y.
-    if (this.windowNumber == 1 || this.windowNumber == 0) {
+    recalcTarget();
+  }
+
+  // helper to recalc targetx/targety from windowNumber + posInLine
+  void recalcTarget() {
+    if (this.windowNumber == 1) {
       this.targetx = 160; 
       this.targety = 530 - this.posInLine * 30;
     }
@@ -45,7 +60,6 @@ class Community { //homeless people
       this.targetx = 760;
       this.targety = 530 - this.posInLine * 30;
     }
-    
   }
   
   //Methods
@@ -100,9 +114,108 @@ class Community { //homeless people
     }
     
   }
-  
-  void updateTarget() {
-    this.targetx = -100; 
-    this.targety = 530 - this.posInLine * 30;
+
+  // check if they have fully walked off-screen
+  boolean hasLeftScreen() {
+    return (xPos < -150 || xPos > width + 150);
+  }
+
+  boolean atLineSpot() {
+    return abs(xPos - targetx) < 2 && abs(yPos - targety) < 2;
+  }
+
+  // update waiting time, hunger colour, and angry leaving if ALL windows closed
+  void updateWaitingState() {
+    if (isServed) return;  // once they’re leaving / done, stop counting
+
+    // only start counting wait time when they have reached their spot in line
+    if (atLineSpot() && !atSpotOnce) {
+      atSpotOnce = true;
+      waitStartTime = millis();
+    }
+    if (!atSpotOnce) return; // they are still walking, don't change colour yet
+
+    // seconds since they started waiting AT THEIR SPOT
+    waitTime = (millis() - waitStartTime) / 1000.0;
+    angerLvl = waitTime;   // more wait time more anger
+
+    // colour based on wait time:
+    // 0–3s  -> at least yellow
+    // 3–7s  -> at least red
+    // 7+s   -> very red
+    if (waitTime < 3) {
+      // at least yellow (3-5 range)
+      if (hungerLvl < 4) hungerLvl = 4;
+    }
+    else if (waitTime < 7) {
+      // at least red
+      if (hungerLvl < 6) hungerLvl = 6;
+    }
+    else {
+      // deep red
+      if (hungerLvl < 8) hungerLvl = 8;
+    }
+
+    // if all windows are closed, let them get angry and eventually leave
+    boolean w1Open = !clicked1;
+    boolean w2Open = !clicked2;
+    boolean w3Open = !clicked3;
+    boolean w4Open = !clicked4;
+    boolean anyOpen = w1Open || w2Open || w3Open || w4Open;
+
+    // only apply this "leave angry" logic when ALL windows are closed
+    if (!anyOpen && waitTime > 10) {  // waited too long (e.g. 10 seconds)
+      // they leave WITHOUT turning green (still hungry and mad)
+      isServed = true;
+      if (windowNumber == 1 || windowNumber == 2) {
+        targetx = -120;          // exit left
+      } else {
+        targetx = width + 120;   // exit right
+      }
+      // keep targety so they slide off horizontally
+    }
+  }
+
+  // reached the window (front of line)
+  boolean hasArrivedAtWindow() {
+    return atLineSpot() && !isServed;
+  }
+
+  // serve person IF this window is not already serving someone
+  // returns true ONLY in the frame they just got food
+    boolean checkServedAndExit(boolean[] windowOccupied) {
+    // only if some windows are open
+    boolean w1Open = !clicked1;
+    boolean w2Open = !clicked2;
+    boolean w3Open = !clicked3;
+    boolean w4Open = !clicked4;
+    boolean anyOpen = w1Open || w2Open || w3Open || w4Open;
+
+    if (!anyOpen) return false;  // don't "serve" people if everything is closed
+
+    // rely on draw() going pos = 5..0 so the first person to arrive
+    // at the highest posInLine per window is treated as "front of the line"
+    if (hasArrivedAtWindow() && !windowOccupied[windowNumber]) {
+      isServed = true;
+
+      // mark this window as currently serving (only one green per window at a time)
+      windowOccupied[windowNumber] = true;
+
+      // make them green (1-3 range)
+      hungerLvl = 1;
+
+      // decide exit direction
+      if (windowNumber == 1 || windowNumber == 2) {
+        // left side windows -> exit left
+        targetx = -120;
+      } else {
+        // right side windows -> exit right
+        targetx = width + 120;
+      }
+      // keep targety the same so they slide out horizontally
+
+      return true;  // just got food this frame
+    }
+    return false;
   }
 }

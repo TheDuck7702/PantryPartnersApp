@@ -20,7 +20,7 @@ PImage closedSign;
 PImage foodStockImg;
 
 // GLOBAL OBJECTS
-Community[] people;
+Community[] people; 
 Weather weatherSystem;
 foodDonor donor;
 
@@ -145,6 +145,62 @@ void rebuildPeopleArray(int totalPeople) {
   }
 }
 
+void rerouteClosedWindows() {
+  boolean w1Open = !clicked1;
+  boolean w2Open = !clicked2;
+  boolean w3Open = !clicked3;
+  boolean w4Open = !clicked4;
+
+  boolean anyOpen = w1Open || w2Open || w3Open || w4Open;
+  if (!anyOpen) return;  // all closed: let waiting logic handle anger + leaving
+
+  // window x positions: index 1..4
+  int[] wx = {0, 160, 360, 560, 760};
+  boolean[] open = {false, w1Open, w2Open, w3Open, w4Open};
+
+  for (int i = 0; i < people.length; i++) {
+    Community c = people[i];
+    if (c.isServed) continue;
+
+    boolean myClosed =
+      (c.windowNumber == 1 && !w1Open) ||
+      (c.windowNumber == 2 && !w2Open) ||
+      (c.windowNumber == 3 && !w3Open) ||
+      (c.windowNumber == 4 && !w4Open);
+
+    if (!myClosed) continue;
+
+    // find closest open window
+    int bestWin = -1;
+    float bestDist = 99999;
+    for (int w = 1; w <= 4; w++) {
+      if (!open[w]) continue;
+      float d = abs(wx[w] - wx[c.windowNumber]);
+      if (d < bestDist) {
+        bestDist = d;
+        bestWin = w;
+      }
+    }
+    if (bestWin == -1) continue;
+
+    // find current max posInLine in that destination window
+    int maxPos = -1;
+    for (int j = 0; j < people.length; j++) {
+      Community other = people[j];
+      if (!other.isServed && other.windowNumber == bestWin) {
+        if (other.posInLine > maxPos) maxPos = other.posInLine;
+      }
+    }
+
+    // put this person at the back of that line (no cutting)
+    c.windowNumber = bestWin;
+    c.posInLine = maxPos + 1;
+    c.atSpotOnce = false;           // they need to walk to the new spot first
+    c.waitStartTime = 0;
+    c.recalcTarget();
+  }
+}
+
 //GRID//////////////////////////////////////////
 //void drawGrid() {
 //  int spacing = 10;  
@@ -190,30 +246,52 @@ void draw() {
 
   // draw weather background + particles
   weatherSystem.animateWeather();
+  
+  // reroute people from closed windows to nearest open window (no cutting)
+  rerouteClosedWindows();
+  
+    // find the highest posInLine currently used so we don't skip people
+  int maxPosInAnyWindow = 0;
+  for (int i = 0; i < people.length; i++) {
+    if (people[i].posInLine > maxPosInAnyWindow) {
+      maxPosInAnyWindow = people[i].posInLine;
+    }
+  }
     
   //update food stock based on current weather
 
-  //move and draw and sort all people :(
+    //move and draw and sort all people :(
+  // first, compute which windows already have a green (served) person leaving
+  boolean[] windowOccupied = new boolean[5]; // index 1..4
+
+  for (int i = 0; i < people.length; i++) {
+    Community c = people[i];
+    if (c.isServed && !c.hasLeftScreen() && c.windowNumber >= 1 && c.windowNumber <= 4) {
+      windowOccupied[c.windowNumber] = true;
+    }
+  }
+
   for (int win = 1; win <= 4; win++) {
-    //for loop runs through all 4 windows makes it so we draw in window 1, than window 2 ...
-    for (int pos = 5; pos >= 0; pos --) {
+  //for loop runs through all 4 windows makes it so we draw in window 1, than window 2 ...
+    for (int pos = maxPosInAnyWindow; pos >= 0; pos--) {
       //loops through all 5 postions  
       for (int check = 0; check < people.length; check++) {
         //if statment checker to insure the index we are on belongs to the current window and the current pos in line
         Community c = people[check];
         if (c.windowNumber == win && c.posInLine == pos) {
-          if (clicked1 == true){
-            c.updateTarget();
+
+          // 1) update waiting / colour / angry leaving if all windows are closed
+          c.updateWaitingState();
+
+          // 2) attempt to serve this person if they reached the window AND
+          //    this window isn't already serving someone green
+          boolean justServed = c.checkServedAndExit(windowOccupied);
+
+          // 3) if they just got food this frame, consume from stock
+          if (justServed) {
+            donor.consumeFood(1);   // 1 "unit" of food per person for now
           }
-          if (clicked2 == true){
-            c.updateTarget();
-          }
-          if (clicked3 == true){
-            c.updateTarget();
-          }
-          if (clicked4 == true){
-            c.updateTarget();
-          }
+
           //draw and move the homeless
           c.moveHomeless();
           c.drawHomeless();
@@ -221,7 +299,6 @@ void draw() {
       }
     }
   }
-
 
   donor.updateStock();
   
