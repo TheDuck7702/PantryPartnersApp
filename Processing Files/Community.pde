@@ -101,7 +101,8 @@ class Community { //homeless people
     
   }
   
-  void clearHomeless() {
-    
+  void updateTarget() {
+    this.targetx = -100; 
+    this.targety = 530 - this.posInLine * 30;
   }
 }
