@@ -28,8 +28,17 @@ int foodStock = 100;
 int totalPeople = 5;
 String selectedWeatherName = "Sunny"; 
 
+// Starting window variables
+boolean gameStarted = false;
+GWindow startWindow;
+GButton startButton;
+
 void setup() {
   size(1000, 800);
+  createStartWindow();
+}
+
+void initializeGame() {
   createGUI();
 
   // start with Sunny weather: 0 = Sunny, 1 = Cloudy, 2 = Rainy, 3 = Snowy
@@ -53,32 +62,77 @@ void setup() {
   foodStockImg = loadImage("foodStockImg.png");
   
   rebuildPeopleArray(totalPeople);
-  // one example community member
   
-  // int totalPeople = 10; //change this one to the gui slider output
-  
-  //c3 = new Community(xHomeless+eNumb, 500,3);
-  //c2 = new Community(xHomeless+eNumb, 470,5);
-  //c = new Community(xHomeless+eNumb, 410,10);
- // c1 = new Community(xHomeless+eNumb, 440,3);
-  
-  //c4 = new Community(xHomeless+eNumb+200, 410,3);
-  //c5 = new Community(xHomeless+eNumb+200, 440,10);
-  //c6 = new Community(xHomeless+eNumb+200, 470,5);
-  //c7 = new Community(xHomeless+eNumb+200, 500,3);
-  
+  gameStarted = true;
+}
 
- //totalPeople = 100; //change this one to the gui slider output
-
-  //people = new Community[totalPeople];
+void createStartWindow() {
+  G4P.messagesEnabled(false);
+  G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
+  G4P.setMouseOverEnabled(false);
   
+  startWindow = GWindow.getWindow(this, "Welcome to Pantry Partners", 0, 0, 600, 500, JAVA2D);
+  startWindow.addDrawHandler(this, "startWindowDraw");
+  startWindow.setActionOnClose(G4P.KEEP_OPEN);
+  
+  GLabel title = new GLabel(startWindow, 50, 30, 500, 40);
+  title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  title.setText("Welcome to Pantry Partners");
+  title.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  title.setOpaque(false);
+  
+  GLabel instructions1 = new GLabel(startWindow, 50, 100, 500, 30);
+  instructions1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  instructions1.setText("Instructions:");
+  instructions1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions1.setOpaque(false);
+  
+  GLabel instructions2 = new GLabel(startWindow, 50, 140, 500, 30);
+  instructions2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions2.setText("• Manage the food pantry and serve community members");
+  instructions2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions2.setOpaque(false);
+  
+  GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
+  instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions3.setText("• Control weather conditions to affect food donations");
+  instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions3.setOpaque(false);
+  
+  GLabel instructions4 = new GLabel(startWindow, 50, 200, 500, 30);
+  instructions4.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions4.setText("• Adjust the number of people in line using the slider");
+  instructions4.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions4.setOpaque(false);
+  
+  GLabel instructions5 = new GLabel(startWindow, 50, 230, 500, 30);
+  instructions5.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions5.setText("• Open or close service windows as needed");
+  instructions5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions5.setOpaque(false);
+  
+  GLabel instructions6 = new GLabel(startWindow, 50, 260, 500, 30);
+  instructions6.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions6.setText("• Monitor food stock levels in the top right corner");
+  instructions6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions6.setOpaque(false);
+  
+  startButton = new GButton(startWindow, 200, 350, 200, 60);
+  startButton.setText("Start Game");
+  startButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  startButton.addEventHandler(this, "startButtonClick");
+  
+  startWindow.loop();
+}
 
-  //people = new Community[totalPeople];
-  //for (int i = 0; i < totalPeople; i++) {
-  //  float startx = 500;
-  //  float starty = 1000; 
-  //  people[i] = new Community(startx, starty); 
-  //}
+synchronized public void startWindowDraw(PApplet appc, GWinData data) {
+  appc.background(240, 248, 255);
+}
+
+public void startButtonClick(GButton source, GEvent event) {
+  startWindow.noLoop();
+  startWindow.dispose();
+  initializeGame();
 }
 
 void rebuildPeopleArray(int totalPeople) {
@@ -92,40 +146,44 @@ void rebuildPeopleArray(int totalPeople) {
 }
 
 //GRID//////////////////////////////////////////
-void drawGrid() {
-  int spacing = 10;  
-  int labelStep = 50;   
-  pushStyle();
-  stroke(0);
-  strokeWeight(1);
-  noFill();
-  textAlign(LEFT, TOP);
-  textSize(15);
-  fill(0);   // label colour
+//void drawGrid() {
+//  int spacing = 10;  
+//  int labelStep = 50;   
+//  pushStyle();
+//  stroke(0);
+//  strokeWeight(1);
+//  noFill();
+//  textAlign(LEFT, TOP);
+//  textSize(15);
+//  fill(0);   // label colour
 
-  // vertical lines + x labels
-  for (int x = 0; x <= width; x += spacing) {
-    line(x, 0, x, height);
+//  // vertical lines + x labels
+//  for (int x = 0; x <= width; x += spacing) {
+//    line(x, 0, x, height);
 
-    if (x % labelStep == 0) {
-      text(x, x + 1.5, 2);   // label near the top
-    }
-  }
-  // horizontal lines + y labels
-  for (int y = 0; y <= height; y += spacing) {
-    line(0, y, width, y);
+//    if (x % labelStep == 0) {
+//      text(x, x + 1.5, 2);   // label near the top
+//    }
+//  }
+//  // horizontal lines + y labels
+//  for (int y = 0; y <= height; y += spacing) {
+//    line(0, y, width, y);
 
-    if (y % labelStep == 0) {
-      text(y, 2, y + 1.5);   // label near the left
-    }
-  }
+//    if (y % labelStep == 0) {
+//      text(y, 2, y + 1.5);   // label near the left
+//    }
+//  }
 
-  popStyle();
-}
+//  popStyle();
+//}
 
 ////////////////////////////////////////////
 
 void draw() {
+  if (!gameStarted) {
+    return;
+  }
+  
   //clear main sketch window
   background(0);
   // drawGrid(); 
@@ -144,6 +202,18 @@ void draw() {
         //if statment checker to insure the index we are on belongs to the current window and the current pos in line
         Community c = people[check];
         if (c.windowNumber == win && c.posInLine == pos) {
+          if (clicked1 == true){
+            c.updateTarget();
+          }
+          if (clicked2 == true){
+            c.updateTarget();
+          }
+          if (clicked3 == true){
+            c.updateTarget();
+          }
+          if (clicked4 == true){
+            c.updateTarget();
+          }
           //draw and move the homeless
           c.moveHomeless();
           c.drawHomeless();
@@ -176,13 +246,6 @@ void draw() {
     image(closedSign, 730, 370, 115, 110);
   }
   
-    //move and draw all people
-  for (int i = 0; i < people.length; i++) {
-    people[i].moveHomeless();
-    people[i].drawHomeless();
-  }
-
- // c.drawHomeless();
 
 
 }
