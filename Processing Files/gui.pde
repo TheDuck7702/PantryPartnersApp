@@ -69,6 +69,7 @@ public void openOrClosedBox4(GCheckbox source, GEvent event) { //_CODE_:openOrCl
 
 public void showFoodBox(GCheckbox source, GEvent event) { //_CODE_:showFood:950188:
   println("showFood - GCheckbox >> GEvent." + event + " @ " + millis());
+  showFoodStock = !showFoodStock;
 } //_CODE_:showFood:950188:
 
 

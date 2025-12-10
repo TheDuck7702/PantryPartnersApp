@@ -58,13 +58,12 @@ class foodDonor {
   }
     
   void drawFoodStock() {
-    image(foodStockImg, 775, 25); 
-    fill(0);
-    textSize(25);
-    text(this.can1, 825, 90);
-    text(this.can2, 825, 130);
-    text(this.can3, 825, 170);
-    //NEED TO CHANGE TO DISPLAY DIF NUMBERS FOR EACH CAN 
+      image(foodStockImg, 775, 25); 
+      fill(0);
+      textSize(25);
+      text(this.can1, 825, 90);
+      text(this.can2, 825, 130);
+      text(this.can3, 825, 170);
   }
     
   void updateStockText(){ 

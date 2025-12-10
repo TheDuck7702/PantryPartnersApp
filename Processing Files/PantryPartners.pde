@@ -15,6 +15,10 @@ Boolean clicked2 = false;
 Boolean clicked3 = false;
 Boolean clicked4 = false;
 
+Boolean showFoodStock = true;
+
+
+
 PImage closedSign;
 
 PImage foodStockImg;
@@ -302,8 +306,9 @@ void draw() {
 
   donor.updateStock();
   
-  //draw food stock stats
-  donor.drawFoodStock();
+  if(showFoodStock){
+    donor.drawFoodStock();
+  }
   
   donor.updateStockText();
 
