@@ -34,8 +34,6 @@ String selectedWeatherName = "Sunny";
 
 // Starting window variables
 boolean gameStarted = false;
-GWindow startWindow;
-GButton startButton;
 
 void setup() {
   size(1000, 800);
@@ -70,82 +68,163 @@ void initializeGame() {
   gameStarted = true;
 }
 
-void createStartWindow() {
-  G4P.messagesEnabled(false);
-  G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
-  G4P.setMouseOverEnabled(false);
-  
-  startWindow = GWindow.getWindow(this, "Welcome to Pantry Partners", 0, 0, 600, 500, JAVA2D);
-  startWindow.addDrawHandler(this, "startWindowDraw");
-  startWindow.setActionOnClose(G4P.KEEP_OPEN);
-  
-  GLabel title = new GLabel(startWindow, 50, 30, 500, 40);
-  title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  title.setText("Welcome to Pantry Partners");
-  title.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  title.setOpaque(false);
-  
-  GLabel instructions1 = new GLabel(startWindow, 50, 100, 500, 30);
-  instructions1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  instructions1.setText("Instructions:");
-  instructions1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions1.setOpaque(false);
-  
-  GLabel instructions2 = new GLabel(startWindow, 50, 140, 500, 30);
-  instructions2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions2.setText("• Manage the food pantry and serve community members");
-  instructions2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions2.setOpaque(false);
-  
-  GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
-  instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions3.setText("• Control weather conditions to affect food donations");
-  instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions3.setOpaque(false);
-  
-  GLabel instructions4 = new GLabel(startWindow, 50, 200, 500, 30);
-  instructions4.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions4.setText("• Adjust the number of people in line using the slider");
-  instructions4.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions4.setOpaque(false);
-  
-  GLabel instructions5 = new GLabel(startWindow, 50, 230, 500, 30);
-  instructions5.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions5.setText("• Open or close service windows as needed");
-  instructions5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions5.setOpaque(false);
-  
-  GLabel instructions6 = new GLabel(startWindow, 50, 260, 500, 30);
-  instructions6.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions6.setText("• Monitor food stock levels in the top right corner");
-  instructions6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  instructions6.setOpaque(false);
-  
-  startButton = new GButton(startWindow, 200, 350, 200, 60);
-  startButton.setText("Start Game");
-  startButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  startButton.addEventHandler(this, "startButtonClick");
-  
-  startWindow.loop();
-}
-
-synchronized public void startWindowDraw(PApplet appc, GWinData data) {
-  appc.background(240, 248, 255);
-}
-
-public void startButtonClick(GButton source, GEvent event) {
-  startWindow.noLoop();
-  startWindow.dispose();
-  initializeGame();
-}
 
 void rebuildPeopleArray(int totalPeople) {
   people = new Community[totalPeople];
 
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
-    float starty = 1000;
+    float starty = height + 100; // spawn from bottom of screen
     people[i] = new Community(startx, starty);
+  }
+}
+
+void resetGame() {
+  // Reset food stock
+  foodStock = 100;
+  
+  // Reset donor
+  donor = new foodDonor();
+  
+  // Reset weather to Sunny
+  selectedWeatherName = "Sunny";
+  weatherSystem.setWeather(0);
+  if (weather != null) {
+    weather.setSelected(0);
+  }
+  
+  // Reset window checkboxes
+  clicked1 = false;
+  clicked2 = false;
+  clicked3 = false;
+  clicked4 = false;
+  if (openOrClosed1 != null) openOrClosed1.setSelected(true);
+  if (openOrClosed2 != null) openOrClosed2.setSelected(true);
+  if (openOrClosed3 != null) openOrClosed3.setSelected(true);
+  if (openOrClosed4 != null) openOrClosed4.setSelected(true);
+  
+  // Reset people array
+  rebuildPeopleArray(totalPeople);
+  
+  // Reset slider if needed
+  if (maxPeopleInLine != null) {
+    maxPeopleInLine.setValue(5);
+  }
+}
+
+void updateLinePositions() {
+  // For each window, sort people by arrival time (first-come-first-serve)
+  for (int win = 1; win <= 4; win++) {
+    // Collect all people at this window who are not served
+    ArrayList<Community> windowPeople = new ArrayList<Community>();
+    for (int i = 0; i < people.length; i++) {
+      Community c = people[i];
+      if (c.windowNumber == win && !c.isServed) {
+        windowPeople.add(c);
+      }
+    }
+    
+    // Separate into two groups: arrived and not arrived
+    ArrayList<Community> arrived = new ArrayList<Community>();
+    ArrayList<Community> notArrived = new ArrayList<Community>();
+    
+    for (Community c : windowPeople) {
+      if (c.arrivalTime != -1) {
+        arrived.add(c);
+      } else {
+        notArrived.add(c);
+      }
+    }
+    
+    // Sort arrived by arrival time (earliest first)
+    for (int i = 0; i < arrived.size() - 1; i++) {
+      for (int j = i + 1; j < arrived.size(); j++) {
+        if (arrived.get(j).arrivalTime < arrived.get(i).arrivalTime) {
+          Community temp = arrived.get(i);
+          arrived.set(i, arrived.get(j));
+          arrived.set(j, temp);
+        }
+      }
+    }
+    
+    // Sort not arrived by spawn time (earliest first) - temporary positions
+    for (int i = 0; i < notArrived.size() - 1; i++) {
+      for (int j = i + 1; j < notArrived.size(); j++) {
+        if (notArrived.get(j).spawnTime < notArrived.get(i).spawnTime) {
+          Community temp = notArrived.get(i);
+          notArrived.set(i, notArrived.get(j));
+          notArrived.set(j, temp);
+        }
+      }
+    }
+    
+    // Assign positions: arrived people get positions 0, 1, 2... (front of line)
+    // Not arrived people get positions after arrived people
+    int pos = 0;
+    for (Community c : arrived) {
+      // Always update position and recalc target to ensure smooth movement
+      if (c.posInLine != pos) {
+        c.posInLine = pos;
+        c.recalcTarget();
+        // Reset arrival tracking if position changed significantly
+        if (abs(c.yPos - c.targety) > 50) {
+          c.atSpotOnce = false;
+        }
+      }
+      pos++;
+    }
+    
+    // Assign temporary positions to not arrived people (they'll be repositioned when they arrive)
+    for (Community c : notArrived) {
+      // Update position if needed
+      if (c.posInLine == 999 || c.posInLine < arrived.size() || c.posInLine >= pos) {
+        c.posInLine = pos;
+        c.recalcTarget();
+      }
+      pos++;
+    }
+  }
+}
+
+void maintainPeopleCount() {
+  // Count how many people are currently in line (not served)
+  int inLineCount = 0;
+  for (int i = 0; i < people.length; i++) {
+    if (!people[i].isServed) {
+      inLineCount++;
+    }
+  }
+  
+  // If we have fewer people in line than the slider value, spawn new ones
+  if (inLineCount < totalPeople) {
+    int needed = totalPeople - inLineCount;
+    
+    // First, try to reuse slots where people have left the screen
+    for (int i = 0; i < people.length && needed > 0; i++) {
+      if (people[i].isServed && people[i].hasLeftScreen()) {
+        // Reuse this slot for a new person
+        float startx = 500;
+        float starty = height + 100; // spawn from bottom of screen
+        people[i] = new Community(startx, starty);
+        needed--;
+      }
+    }
+    
+    // If we still need more people, expand the array
+    if (needed > 0) {
+      Community[] newPeople = new Community[people.length + needed];
+      // Copy existing people
+      for (int i = 0; i < people.length; i++) {
+        newPeople[i] = people[i];
+      }
+      // Add new people
+      for (int i = 0; i < needed; i++) {
+        float startx = 500;
+        float starty = height + 100; // spawn from bottom of screen
+        newPeople[people.length + i] = new Community(startx, starty);
+      }
+      people = newPeople;
+    }
   }
 }
 
@@ -198,9 +277,10 @@ void rerouteClosedWindows() {
 
     // put this person at the back of that line (no cutting)
     c.windowNumber = bestWin;
-    c.posInLine = maxPos + 1;
+    c.posInLine = 999; // will be assigned by updateLinePositions based on arrival
     c.atSpotOnce = false;           // they need to walk to the new spot first
     c.waitStartTime = 0;
+    c.arrivalTime = -1; // reset arrival time, will be set when they reach new spot
     c.recalcTarget();
   }
 }
@@ -254,6 +334,12 @@ void draw() {
   // reroute people from closed windows to nearest open window (no cutting)
   rerouteClosedWindows();
   
+  // Update line positions based on first-come-first-serve
+  updateLinePositions();
+  
+  // Spawn new people if needed to maintain the slider count
+  maintainPeopleCount();
+  
     // find the highest posInLine currently used so we don't skip people
   int maxPosInAnyWindow = 0;
   for (int i = 0; i < people.length; i++) {
@@ -265,13 +351,21 @@ void draw() {
   //update food stock based on current weather
 
     //move and draw and sort all people :(
-  // first, compute which windows already have a green (served) person leaving
+    // first, compute which windows already have a green (served) person at the window
+    // Only mark as occupied if they're still near the window (haven't moved away yet)
   boolean[] windowOccupied = new boolean[5]; // index 1..4
 
   for (int i = 0; i < people.length; i++) {
     Community c = people[i];
-    if (c.isServed && !c.hasLeftScreen() && c.windowNumber >= 1 && c.windowNumber <= 4) {
-      windowOccupied[c.windowNumber] = true;
+    // Only mark window as occupied if person is served and still near the window position
+    // This allows the next person to be served once the previous person moves away
+    if (c.isServed && c.windowNumber >= 1 && c.windowNumber <= 4) {
+      // Check if they're still near the window (within 100 pixels of window x position)
+      int[] wx = {0, 160, 360, 560, 760};
+      float windowX = wx[c.windowNumber];
+      if (abs(c.xPos - windowX) < 100 && !c.hasLeftScreen()) {
+        windowOccupied[c.windowNumber] = true;
+      }
     }
   }
 
@@ -291,9 +385,17 @@ void draw() {
           //    this window isn't already serving someone green
           boolean justServed = c.checkServedAndExit(windowOccupied);
 
-          // 3) if they just got food this frame, consume from stock
+          // 3) if they just got food this frame, consume from stock based on hunger level
           if (justServed) {
-            donor.consumeFood(1);   // 1 "unit" of food per person for now
+            // Consume food based on hunger level (higher hunger = more food needed)
+            // Scale: hunger 4-5 (yellow) = 1, hunger 6-7 = 2, hunger 8-10 (red) = 3
+            int foodAmount = 1;
+            if (c.hungerBeforeServed >= 8) {
+              foodAmount = 3;
+            } else if (c.hungerBeforeServed >= 6) {
+              foodAmount = 2;
+            }
+            donor.consumeFood(foodAmount);
           }
 
           //draw and move the homeless

@@ -18,6 +18,8 @@ class Community { //homeless people
   int spawnTime;      // when created
   boolean atSpotOnce; // has reached their line spot at least once
   int waitStartTime;  // when they first reached their spot
+  int arrivalTime;    // when they first arrived at their window (for first-come-first-serve)
+  float hungerBeforeServed; // store hunger level before being served (for food consumption)
                     
   //Constucter
   Community(float xPos, float yPos ) {
@@ -33,22 +35,25 @@ class Community { //homeless people
 
     // windows 1..4 (not 0..4)
     this.windowNumber = int(random(1, 5));
-    this.posInLine = int(random(0, 6));
+    this.posInLine = 999; // will be assigned based on arrival order
     this.spawnTime = millis();
     this.atSpotOnce = false;
     this.waitStartTime = 0;
+    this.arrivalTime = -1; // not arrived yet
+    this.hungerBeforeServed = 0; // initialize hunger before served
     
     //calc which target x and target y form the posInLine and windowNumber. done in constructor bc so each homeless guy immediately knows the target x and y.
     recalcTarget();
   }
 
   // helper to recalc targetx/targety from windowNumber + posInLine
+  // posInLine 0 = first in line (closest to window, highest y)
   void recalcTarget() {
     if (this.windowNumber == 1) {
       this.targetx = 160; 
       this.targety = 530 - this.posInLine * 30;
     }
-    else if(this.windowNumber == 2){ // add teh window 3 and 4 coords
+    else if(this.windowNumber == 2){
       this.targetx = 360;
       this.targety = 530 - this.posInLine * 30;
     }
@@ -105,12 +110,17 @@ class Community { //homeless people
   void moveHomeless() {
     float speed = 0.05; // so 2 pixals per frame
     
-    if(abs(xPos - targetx) > 1) {
+    // Always move towards target, even if close (helps with smooth movement when positions update)
+    if(abs(xPos - targetx) > 0.5) {
       xPos += (targetx - xPos) * speed;
+    } else {
+      xPos = targetx; // snap to target when very close
     }
     
-    if(abs(yPos - targety) > 1) {
+    if(abs(yPos - targety) > 0.5) {
       yPos += (targety - yPos) * speed;
+    } else {
+      yPos = targety; // snap to target when very close
     }
     
   }
@@ -126,12 +136,16 @@ class Community { //homeless people
 
   // update waiting time, hunger colour, and angry leaving if ALL windows closed
   void updateWaitingState() {
-    if (isServed) return;  // once they’re leaving / done, stop counting
+    if (isServed) return;  // once they're leaving / done, stop counting
 
     // only start counting wait time when they have reached their spot in line
     if (atLineSpot() && !atSpotOnce) {
       atSpotOnce = true;
       waitStartTime = millis();
+      // Mark arrival time for first-come-first-serve ordering
+      if (arrivalTime == -1) {
+        arrivalTime = millis();
+      }
     }
     if (!atSpotOnce) return; // they are still walking, don't change colour yet
 
@@ -193,10 +207,13 @@ class Community { //homeless people
 
     if (!anyOpen) return false;  // don't "serve" people if everything is closed
 
-    // rely on draw() going pos = 5..0 so the first person to arrive
-    // at the highest posInLine per window is treated as "front of the line"
-    if (hasArrivedAtWindow() && !windowOccupied[windowNumber]) {
+    // Only serve if they are at the front of the line (posInLine == 0)
+    // and have arrived at the window
+    if (hasArrivedAtWindow() && posInLine == 0 && !windowOccupied[windowNumber]) {
       isServed = true;
+
+      // store hunger level before serving (for food consumption calculation)
+      hungerBeforeServed = hungerLvl;
 
       // mark this window as currently serving (only one green per window at a time)
       windowOccupied[windowNumber] = true;

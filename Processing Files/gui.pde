@@ -14,6 +14,83 @@
  * =========================================================
  */
 
+// Starting window variables
+GWindow startWindow;
+GButton startButton;
+
+void createStartWindow() {
+  G4P.messagesEnabled(false);
+  G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
+  G4P.setMouseOverEnabled(false);
+  
+  startWindow = GWindow.getWindow(this, "Welcome to Pantry Partners", 0, 0, 600, 500, JAVA2D);
+  startWindow.addDrawHandler(this, "startWindowDraw");
+  startWindow.setActionOnClose(G4P.CLOSE_WINDOW);
+  
+  GLabel title = new GLabel(startWindow, 50, 30, 500, 40);
+  title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  title.setText("Welcome to Pantry Partners");
+  title.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  title.setOpaque(false);
+  
+  GLabel instructions1 = new GLabel(startWindow, 50, 100, 500, 30);
+  instructions1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  instructions1.setText("Instructions:");
+  instructions1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions1.setOpaque(false);
+  
+  GLabel instructions2 = new GLabel(startWindow, 50, 140, 500, 30);
+  instructions2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions2.setText("• Manage the food pantry and serve community members");
+  instructions2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions2.setOpaque(false);
+  
+  GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
+  instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions3.setText("• Control weather conditions to affect food donations");
+  instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions3.setOpaque(false);
+  
+  GLabel instructions4 = new GLabel(startWindow, 50, 200, 500, 30);
+  instructions4.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions4.setText("• Adjust the number of people in line using the slider");
+  instructions4.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions4.setOpaque(false);
+  
+  GLabel instructions5 = new GLabel(startWindow, 50, 230, 500, 30);
+  instructions5.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions5.setText("• Open or close service windows as needed");
+  instructions5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions5.setOpaque(false);
+  
+  GLabel instructions6 = new GLabel(startWindow, 50, 260, 500, 30);
+  instructions6.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions6.setText("• Monitor food stock levels in the top right corner");
+  instructions6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions6.setOpaque(false);
+  
+  startButton = new GButton(startWindow, 200, 350, 200, 60);
+  startButton.setText("Start Game");
+  startButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  startButton.addEventHandler(this, "startButtonClick");
+  
+  startWindow.loop();
+}
+
+synchronized public void startWindowDraw(PApplet appc, GWinData data) {
+  appc.background(240, 248, 255);
+}
+
+public void startButtonClick(GButton source, GEvent event) {
+  if (startWindow != null) {
+    startWindow.noLoop();
+    startWindow.setVisible(false);
+    startWindow.dispose();
+    startWindow = null;
+  }
+  initializeGame();
+}
+
 synchronized public void GUIWindowDraw(PApplet appc, GWinData data) { //_CODE_:GUIWindow:359935:
   appc.background(230);
 } //_CODE_:GUIWindow:359935:
@@ -48,7 +125,7 @@ public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_
 }
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:
-  println("button1 - GButton >> GEvent." + event + " @ " + millis());
+  resetGame();
 } //_CODE_:button1:515551:
 
 public void openOrClosedBox1(GCheckbox source, GEvent event) { //_CODE_:openOrClosed1:449196:
@@ -116,7 +193,7 @@ public void createGUI(){
   peopleInLine.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   peopleInLine.setOpaque(false);
   button1 = new GButton(GUIWindow, 260, 130, 80, 30);
-  button1.setText("Clear People");
+  button1.setText("Reset");
   button1.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
   button1.addEventHandler(this, "button1_click1");
   openOrClosed2 = new GCheckbox(GUIWindow, 20, 250, 120, 20);
