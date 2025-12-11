@@ -17,8 +17,6 @@ Boolean clicked4 = false;
 
 Boolean showFoodStock = true;
 
-
-
 PImage closedSign;
 
 PImage foodStockImg;
@@ -74,7 +72,7 @@ void rebuildPeopleArray(int totalPeople) {
 
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
-    float starty = height + 100; // spawn from bottom of screen
+    float starty = 900; // spawn from bottom of screen
     people[i] = new Community(startx, starty);
   }
 }
