@@ -35,7 +35,7 @@ class Community { //homeless people
 
     // windows 1..4 (not 0..4)
     this.windowNumber = int(random(1, 5));
-    this.posInLine = 20; // will be assigned based on arrival order DONT CHANGE THIS LINE
+    this.posInLine = 999; // will be assigned based on arrival order
     this.spawnTime = millis();
     this.atSpotOnce = false;
     this.waitStartTime = 0;
@@ -51,19 +51,19 @@ class Community { //homeless people
   void recalcTarget() {
     if (this.windowNumber == 1) {
       this.targetx = 160; 
-      this.targety = 430 + this.posInLine * 30;
+      this.targety = 430 + this.posInLine * 40;
     }
     else if(this.windowNumber == 2){
       this.targetx = 360;
-      this.targety = 430 + this.posInLine * 30;
+      this.targety = 430 + this.posInLine * 40;
     }
     else if (this.windowNumber == 3) {
       this.targetx = 560;
-      this.targety = 430 + this.posInLine * 30;
+      this.targety = 430 + this.posInLine * 40;
     }
     else{
       this.targetx = 760;
-      this.targety = 430 + this.posInLine * 30;
+      this.targety = 430 + this.posInLine * 40;
     }
   }
   

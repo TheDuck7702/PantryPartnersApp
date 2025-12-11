@@ -47,13 +47,13 @@ void createStartWindow() {
   
   GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
   instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions3.setText("• Control weather conditions to affect food donations");
+  instructions3.setText("• Red people: takes 8 cans                                      •Yellow people: takes 5 cans");
   instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions3.setOpaque(false);
   
   GLabel instructions4 = new GLabel(startWindow, 50, 200, 500, 30);
   instructions4.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions4.setText("• Adjust the number of people in line using the slider");
+  instructions4.setText("• Adjust the total number of people in line using the slider");
   instructions4.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions4.setOpaque(false);
   
@@ -70,7 +70,7 @@ void createStartWindow() {
   instructions6.setOpaque(false);
   
   startButton = new GButton(startWindow, 200, 350, 200, 60);
-  startButton.setText("Start Game");
+  startButton.setText("Start Simulation");
   startButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   startButton.addEventHandler(this, "startButtonClick");
   

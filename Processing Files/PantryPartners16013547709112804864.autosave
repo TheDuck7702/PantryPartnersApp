@@ -17,6 +17,8 @@ Boolean clicked4 = false;
 
 Boolean showFoodStock = true;
 
+
+
 PImage closedSign;
 
 PImage foodStockImg;
@@ -72,7 +74,7 @@ void rebuildPeopleArray(int totalPeople) {
 
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
-    float starty = 900; // spawn from bottom of screen
+    float starty = height + 100; // spawn from bottom of screen
     people[i] = new Community(startx, starty);
   }
 }
@@ -329,7 +331,6 @@ void draw() {
   // draw weather background + particles
   weatherSystem.animateWeather();
   
-  // closed window
   if (clicked1) {
     image(closedSign, 145, 370, 115, 110);
   }
@@ -401,7 +402,7 @@ void draw() {
           if (justServed) {
             // Consume food based on hunger level (higher hunger = more food needed)
             // Scale: hunger 4-5 (yellow) = 1, hunger 6-7 = 2, hunger 8-10 (red) = 3
-            int foodAmount = 1;
+            int foodAmount = 2;
             if (c.hungerBeforeServed >= 8) {
               foodAmount = 8;
             } else if (c.hungerBeforeServed >= 6) {
@@ -425,5 +426,6 @@ void draw() {
   }
   
   donor.updateStockText();
+
 
 }
