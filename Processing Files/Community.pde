@@ -35,7 +35,7 @@ class Community { //homeless people
 
     // windows 1..4 (not 0..4)
     this.windowNumber = int(random(1, 5));
-    this.posInLine = 20; // will be assigned based on arrival order DONT CHANGE THIS LINE
+    this.posInLine = -1; // will be assigned based on arrival order DONT CHANGE THIS LINE
     this.spawnTime = millis();
     this.atSpotOnce = false;
     this.waitStartTime = 0;

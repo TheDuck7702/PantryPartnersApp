@@ -175,7 +175,7 @@ void updateLinePositions() {
     // Assign temporary positions to not arrived people (they'll be repositioned when they arrive)
     for (Community c : notArrived) {
       // Update position if needed
-      if (c.posInLine == 999 || c.posInLine < arrived.size() || c.posInLine >= pos) {
+      if (c.posInLine == -1 || c.posInLine < arrived.size() || c.posInLine >= pos) {
         c.posInLine = pos;
         c.recalcTarget();
       }
@@ -275,7 +275,7 @@ void rerouteClosedWindows() {
 
     // put this person at the back of that line (no cutting)
     c.windowNumber = bestWin;
-    c.posInLine = 999; // will be assigned by updateLinePositions based on arrival
+    c.posInLine = -1; // will be assigned by updateLinePositions based on arrival
     c.atSpotOnce = false;           // they need to walk to the new spot first
     c.waitStartTime = 0;
     c.arrivalTime = -1; // reset arrival time, will be set when they reach new spot
@@ -321,7 +321,7 @@ void draw() {
   if (!gameStarted) {
     return;
   }
-  
+
   //clear main sketch window
   background(0);
   // drawGrid(); 
@@ -380,43 +380,30 @@ void draw() {
       }
     }
   }
+for (int i = 0; i < people.length; i++) {
+    Community c = people[i];
+    
+    if (c.windowNumber >= 1 && c.windowNumber <= 4 && c.posInLine >= 0) {
+        // 1) update waiting / color / angry leaving if all windows are closed
+        c.updateWaitingState();
 
-  for (int win = 1; win <= 4; win++) {
-  //for loop runs through all 4 windows makes it so we draw in window 1, than window 2 ...
-    for (int pos = maxPosInAnyWindow; pos >= 0; pos--) {
-      //loops through all 5 postions  
-      for (int check = 0; check < people.length; check++) {
-        //if statment checker to insure the index we are on belongs to the current window and the current pos in line
-        Community c = people[check];
-        if (c.windowNumber == win && c.posInLine == pos) {
+        // 2) attempt to serve this person if they reached the window AND
+        //    this window isn't already serving someone green
+        boolean justServed = c.checkServedAndExit(windowOccupied);
 
-          // 1) update waiting / colour / angry leaving if all windows are closed
-          c.updateWaitingState();
-
-          // 2) attempt to serve this person if they reached the window AND
-          //    this window isn't already serving someone green
-          boolean justServed = c.checkServedAndExit(windowOccupied);
-
-          // 3) if they just got food this frame, consume from stock based on hunger level
-          if (justServed) {
-            // Consume food based on hunger level (higher hunger = more food needed)
-            // Scale: hunger 4-5 (yellow) = 1, hunger 6-7 = 2, hunger 8-10 (red) = 3
+        // 3) consume food if just served
+        if (justServed) {
             int foodAmount = 1;
-            if (c.hungerBeforeServed >= 8) {
-              foodAmount = 8;
-            } else if (c.hungerBeforeServed >= 6) {
-              foodAmount = 5;
-            }
+            if (c.hungerBeforeServed >= 8) foodAmount = 8;
+            else if (c.hungerBeforeServed >= 6) foodAmount = 5;
             donor.consumeFood(foodAmount);
-          }
-
-          //draw and move the homeless
-          c.moveHomeless();
-          c.drawHomeless();
         }
-      }
+
+        // move and draw
+        c.moveHomeless();
+        c.drawHomeless();
     }
-  }
+}
 
   donor.updateStock();
   
