@@ -47,7 +47,7 @@ void createStartWindow() {
   
   GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
   instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions3.setText("• Red people: takes 8 cans                                      •Yellow people: takes 5 cans");
+  instructions3.setText("COLUR LEGEND: •Green people: Satisfied      •Yellow people (hungry): takes 5 cans      • Red people (very hungry): takes 8 cans");
   instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions3.setOpaque(false);
   
@@ -120,8 +120,8 @@ public void weatherControl(GDropList source, GEvent event) { //_CODE_:weather:37
 }
 
 public void maxPeopleInLineSlider(GCustomSlider source, GEvent event) { //_CODE_:maxPeopleInLine:800754:
-  int totalPeople = maxPeopleInLine.getValueI();  
-  rebuildPeopleArray(totalPeople);
+  totalPeople = maxPeopleInLine.getValueI();  
+  // Don't rebuild array here - maintainPeopleCount() will handle maintaining the count
 }
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:515551:

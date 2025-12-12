@@ -22,7 +22,7 @@ class Community { //homeless people
   float hungerBeforeServed; // store hunger level before being served (for food consumption)
                     
   //Constucter
-  Community(float xPos, float yPos ) {
+  Community(float xPos, float yPos, int windowNum) {
     // start people somewhere between yellow and red (no green people in line)
     this.hungerLvl = int(random(4, 10));   // 4–5 => yellow, >5 => red
 
@@ -33,9 +33,9 @@ class Community { //homeless people
     this.yPos = yPos; 
     this.gender = genders[int(random(2))];
 
-    // windows 1..4 (not 0..4)
-    this.windowNumber = int(random(1, 5));
-    this.posInLine = 20; // will be assigned based on arrival order DONT CHANGE THIS LINE
+    // windows 1..4 (not 0..4) - use provided window number
+    this.windowNumber = windowNum;
+    this.posInLine = -1; // will be assigned based on arrival order DONT CHANGE THIS LINE
     this.spawnTime = millis();
     this.atSpotOnce = false;
     this.waitStartTime = 0;
@@ -210,6 +210,14 @@ class Community { //homeless people
     // Only serve if they are at the front of the line (posInLine == 0)
     // and have arrived at the window
     if (hasArrivedAtWindow() && posInLine == 0 && !windowOccupied[windowNumber]) {
+      // Calculate how much food they need
+      int foodAmount = 1;
+      if (hungerLvl >= 8) foodAmount = 8;
+      else if (hungerLvl >= 6) foodAmount = 5;
+      
+      // Check if there's enough food available
+      boolean hasFood = foodStock >= foodAmount;
+      
       isServed = true;
 
       // store hunger level before serving (for food consumption calculation)
@@ -218,8 +226,15 @@ class Community { //homeless people
       // mark this window as currently serving (only one green per window at a time)
       windowOccupied[windowNumber] = true;
 
-      // make them green (1-3 range)
-      hungerLvl = 1;
+      // Only make them green if food is available, otherwise keep them red (hungry)
+      if (hasFood) {
+        // make them green (1-3 range)
+        hungerLvl = 1;
+      } else {
+        // No food available - keep them red (hungry)
+        // Ensure they stay red by keeping hunger level high
+        if (hungerLvl < 6) hungerLvl = 6;
+      }
 
       // decide exit direction
       if (windowNumber == 1 || windowNumber == 2) {
@@ -231,7 +246,7 @@ class Community { //homeless people
       }
       // keep targety the same so they slide out horizontally
 
-      return true;  // just got food this frame
+      return hasFood;  // return true only if they actually got food
     }
     return false;
   }

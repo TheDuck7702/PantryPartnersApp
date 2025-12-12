@@ -67,13 +67,63 @@ void initializeGame() {
 }
 
 
+// Helper function to find the window with the least number of people (only open windows)
+int findWindowWithLeastPeople() {
+  boolean w1Open = !clicked1;
+  boolean w2Open = !clicked2;
+  boolean w3Open = !clicked3;
+  boolean w4Open = !clicked4;
+  
+  // Count people at each open window (only count people not yet served)
+  int[] windowCounts = {0, 0, 0, 0, 0}; // index 0 unused, 1-4 for windows
+  
+  // Check if people array exists and is initialized
+  if (people != null) {
+    for (int i = 0; i < people.length; i++) {
+      Community c = people[i];
+      if (c != null && !c.isServed && c.windowNumber >= 1 && c.windowNumber <= 4) {
+        windowCounts[c.windowNumber]++;
+      }
+    }
+  }
+  
+  // Find the open window with the least people
+  int bestWindow = -1;
+  int minCount = 99999;
+  
+  if (w1Open && windowCounts[1] < minCount) {
+    minCount = windowCounts[1];
+    bestWindow = 1;
+  }
+  if (w2Open && windowCounts[2] < minCount) {
+    minCount = windowCounts[2];
+    bestWindow = 2;
+  }
+  if (w3Open && windowCounts[3] < minCount) {
+    minCount = windowCounts[3];
+    bestWindow = 3;
+  }
+  if (w4Open && windowCounts[4] < minCount) {
+    minCount = windowCounts[4];
+    bestWindow = 4;
+  }
+  
+  // If all windows are closed, default to window 1
+  if (bestWindow == -1) {
+    bestWindow = 1;
+  }
+  
+  return bestWindow;
+}
+
 void rebuildPeopleArray(int totalPeople) {
   people = new Community[totalPeople];
 
   for (int i = 0; i < totalPeople; i++) {
     float startx = 500;
     float starty = 900; // spawn from bottom of screen
-    people[i] = new Community(startx, starty);
+    int windowNum = findWindowWithLeastPeople();
+    people[i] = new Community(startx, starty, windowNum);
   }
 }
 
@@ -175,7 +225,7 @@ void updateLinePositions() {
     // Assign temporary positions to not arrived people (they'll be repositioned when they arrive)
     for (Community c : notArrived) {
       // Update position if needed
-      if (c.posInLine == 999 || c.posInLine < arrived.size() || c.posInLine >= pos) {
+      if (c.posInLine == -1 || c.posInLine < arrived.size() || c.posInLine >= pos) {
         c.posInLine = pos;
         c.recalcTarget();
       }
@@ -203,7 +253,8 @@ void maintainPeopleCount() {
         // Reuse this slot for a new person
         float startx = 500;
         float starty = height + 100; // spawn from bottom of screen
-        people[i] = new Community(startx, starty);
+        int windowNum = findWindowWithLeastPeople();
+        people[i] = new Community(startx, starty, windowNum);
         needed--;
       }
     }
@@ -219,7 +270,8 @@ void maintainPeopleCount() {
       for (int i = 0; i < needed; i++) {
         float startx = 500;
         float starty = height + 100; // spawn from bottom of screen
-        newPeople[people.length + i] = new Community(startx, starty);
+        int windowNum = findWindowWithLeastPeople();
+        newPeople[people.length + i] = new Community(startx, starty, windowNum);
       }
       people = newPeople;
     }
@@ -275,7 +327,7 @@ void rerouteClosedWindows() {
 
     // put this person at the back of that line (no cutting)
     c.windowNumber = bestWin;
-    c.posInLine = 999; // will be assigned by updateLinePositions based on arrival
+    c.posInLine = -1; // will be assigned by updateLinePositions based on arrival
     c.atSpotOnce = false;           // they need to walk to the new spot first
     c.waitStartTime = 0;
     c.arrivalTime = -1; // reset arrival time, will be set when they reach new spot
@@ -321,7 +373,7 @@ void draw() {
   if (!gameStarted) {
     return;
   }
-  
+
   //clear main sketch window
   background(0);
   // drawGrid(); 
@@ -380,43 +432,30 @@ void draw() {
       }
     }
   }
+for (int i = 0; i < people.length; i++) {
+    Community c = people[i];
+    
+    if (c.windowNumber >= 1 && c.windowNumber <= 4 && c.posInLine >= 0) {
+        // 1) update waiting / color / angry leaving if all windows are closed
+        c.updateWaitingState();
 
-  for (int win = 1; win <= 4; win++) {
-  //for loop runs through all 4 windows makes it so we draw in window 1, than window 2 ...
-    for (int pos = maxPosInAnyWindow; pos >= 0; pos--) {
-      //loops through all 5 postions  
-      for (int check = 0; check < people.length; check++) {
-        //if statment checker to insure the index we are on belongs to the current window and the current pos in line
-        Community c = people[check];
-        if (c.windowNumber == win && c.posInLine == pos) {
+        // 2) attempt to serve this person if they reached the window AND
+        //    this window isn't already serving someone green
+        boolean justServed = c.checkServedAndExit(windowOccupied);
 
-          // 1) update waiting / colour / angry leaving if all windows are closed
-          c.updateWaitingState();
-
-          // 2) attempt to serve this person if they reached the window AND
-          //    this window isn't already serving someone green
-          boolean justServed = c.checkServedAndExit(windowOccupied);
-
-          // 3) if they just got food this frame, consume from stock based on hunger level
-          if (justServed) {
-            // Consume food based on hunger level (higher hunger = more food needed)
-            // Scale: hunger 4-5 (yellow) = 1, hunger 6-7 = 2, hunger 8-10 (red) = 3
+        // 3) consume food if just served (only if food was actually available)
+        if (justServed) {
             int foodAmount = 1;
-            if (c.hungerBeforeServed >= 8) {
-              foodAmount = 8;
-            } else if (c.hungerBeforeServed >= 6) {
-              foodAmount = 5;
-            }
+            if (c.hungerBeforeServed >= 8) foodAmount = 8;
+            else if (c.hungerBeforeServed >= 6) foodAmount = 5;
             donor.consumeFood(foodAmount);
-          }
-
-          //draw and move the homeless
-          c.moveHomeless();
-          c.drawHomeless();
         }
-      }
+
+        // move and draw
+        c.moveHomeless();
+        c.drawHomeless();
     }
-  }
+}
 
   donor.updateStock();
   
