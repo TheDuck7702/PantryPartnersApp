@@ -3,7 +3,7 @@ class Community { //homeless people
   
   String[] genders = {"man", "women"};  //for random man or women generator
   //Fields
-  float hungerLvl; // 1-3 green. 3-5 yellow. 5-10 red. 
+  float hungerLvl; // 0 green (already satisfied). 3-5 yellow. 5-10 red. 
   float waitTime;
   float angerLvl; // more wait time more anger
   float targetx; // so the objects know where to move
