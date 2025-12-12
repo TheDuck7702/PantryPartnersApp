@@ -1,3 +1,4 @@
+//Community class
 class Community { //Community members that receive food donations
   
   String[] genders = {"man", "women"};  //for random man or women generator

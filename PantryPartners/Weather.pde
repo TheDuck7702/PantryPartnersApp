@@ -1,3 +1,4 @@
+//Weather class
 class Weather {
   int weatherType;      // 0 = Sunny, 1 = Cloudy, 2 = Rainy, 3 = Snowy
   int n;

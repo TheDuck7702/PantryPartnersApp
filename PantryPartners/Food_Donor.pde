@@ -1,3 +1,4 @@
+//Food donor class
 class foodDonor {
   
   int nextDonationTime;
