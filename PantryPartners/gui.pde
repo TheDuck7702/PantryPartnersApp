@@ -79,7 +79,7 @@ void createStartWindow() {
   
   GLabel instructions8 = new GLabel(startWindow, 50, 290, 500, 30);
   instructions8.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions8.setText("• Green: Satisfied person, has already received food.");
+  instructions8.setText("• Green: Satisfied person, has already received food");
   instructions8.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   instructions8.setOpaque(false);
   
