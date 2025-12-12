@@ -172,7 +172,7 @@ class Community { //Community members that receive food donations
     boolean anyOpen = w1Open || w2Open || w3Open || w4Open;
 
     // only apply this "leave angry" logic when ALL windows are closed
-    if (!anyOpen && waitTime > 10) {  // waited too long (e.g. 10 seconds)
+    if (!anyOpen && waitTime > 2) {  // All windows are closed and have waited 2 seconds
       // they leave WITHOUT turning green (still hungry and mad)
       isServed = true;
       if (windowNumber == 1 || windowNumber == 2) {
