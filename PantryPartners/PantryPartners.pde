@@ -1,6 +1,16 @@
+//////////////////////////////////////////////////////////////////
+//Pantry Partners
+//Course: ICS 4UI - 02
+//Teacher: Mr. Schattman
+//Created by: Michelle Wu, Prinaka Basu, Shayaan Shaikh and John Fu
+//////////////////////////////////////////////////////////////////
+
+//Main tab
+
+// Import g4p
 import g4p_controls.*;
 
-//images
+//import images
 PImage manImgGreen;
 PImage manImgYellow;
 PImage manImgRed;
@@ -9,7 +19,10 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
+PImage closedSign;
+PImage foodStockImg;
 
+//Global variables for windows
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
@@ -17,9 +30,7 @@ Boolean clicked4 = false;
 
 Boolean showFoodStock = true;
 
-PImage closedSign;
 
-PImage foodStockImg;
 
 // GLOBAL OBJECTS
 Community[] people; 
