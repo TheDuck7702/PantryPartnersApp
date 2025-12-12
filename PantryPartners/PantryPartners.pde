@@ -4,7 +4,6 @@
 //Teacher: Mr. Schattman
 //Created by: Michelle Wu, Prinaka Basu, Shayaan Shaikh and John Fu
 //////////////////////////////////////////////////////////////////
-
 //Main tab
 
 // Import g4p
@@ -19,14 +18,13 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-<<<<<<< HEAD
 PImage closedSign;
 PImage foodStockImg;
 
 //Global variables for windows
-=======
+
 //window checkbox from gui
->>>>>>> 94e490d0f9a81507413eff490d0c6437b3a39f14
+
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
@@ -387,14 +385,6 @@ void draw() {
   // Spawn new people if needed to maintain the slider count
   maintainPeopleCount();
   
-    // find the highest posInLine currently used so we don't skip people
-  int maxPosInAnyWindow = 0;
-  for (int i = 0; i < people.length; i++) {
-    if (people[i].posInLine > maxPosInAnyWindow) {
-      maxPosInAnyWindow = people[i].posInLine;
-    }
-  }
-    
   //update food stock based on current weather
 
     //move and draw and sort all people :(
