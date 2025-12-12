@@ -85,13 +85,13 @@ void createStartWindow() {
   
   GLabel instructions9 = new GLabel(startWindow, 50, 320, 500, 30);
   instructions9.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions9.setText("• Yellow: Very hungry person, will take 5 cans of food");
+  instructions9.setText("• Yellow: Very hungry person, will take 4-5 cans of food");
   instructions9.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   instructions9.setOpaque(false);
   
   GLabel instructions10 = new GLabel(startWindow, 50, 350, 500, 30);
   instructions10.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions10.setText("• Red: Very hungry person, will take 8 cans of food");
+  instructions10.setText("• Red: Very hungry person, will take 5-8 cans of food");
   instructions10.setLocalColorScheme(GCScheme.RED_SCHEME);
   instructions10.setOpaque(false);
   
