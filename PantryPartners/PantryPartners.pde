@@ -335,39 +335,6 @@ void rerouteClosedWindows() {
   }
 }
 
-//GRID//////////////////////////////////////////
-//void drawGrid() {
-//  int spacing = 10;  
-//  int labelStep = 50;   
-//  pushStyle();
-//  stroke(0);
-//  strokeWeight(1);
-//  noFill();
-//  textAlign(LEFT, TOP);
-//  textSize(15);
-//  fill(0);   // label colour
-
-//  // vertical lines + x labels
-//  for (int x = 0; x <= width; x += spacing) {
-//    line(x, 0, x, height);
-
-//    if (x % labelStep == 0) {
-//      text(x, x + 1.5, 2);   // label near the top
-//    }
-//  }
-//  // horizontal lines + y labels
-//  for (int y = 0; y <= height; y += spacing) {
-//    line(0, y, width, y);
-
-//    if (y % labelStep == 0) {
-//      text(y, 2, y + 1.5);   // label near the left
-//    }
-//  }
-
-//  popStyle();
-//}
-
-////////////////////////////////////////////
 
 void draw() {
   if (!gameStarted) {
@@ -376,7 +343,6 @@ void draw() {
 
   //clear main sketch window
   background(0);
-  // drawGrid(); 
 
   // draw weather background + particles
   weatherSystem.animateWeather();

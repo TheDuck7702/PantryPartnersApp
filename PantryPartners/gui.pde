@@ -29,47 +29,73 @@ void createStartWindow() {
   
   GLabel title = new GLabel(startWindow, 50, 30, 500, 40);
   title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  title.setText("Welcome to Pantry Partners");
-  title.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  title.setText("Welcome to Pantry Partners!");
+  title.setLocalColorScheme(GCScheme.CYAN_SCHEME);;
   title.setOpaque(false);
   
-  GLabel instructions1 = new GLabel(startWindow, 50, 100, 500, 30);
-  instructions1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  GLabel instructions1 = new GLabel(startWindow, 20, 80, 500, 30);
+  instructions1.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
   instructions1.setText("Instructions:");
-  instructions1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+  instructions1.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   instructions1.setOpaque(false);
   
-  GLabel instructions2 = new GLabel(startWindow, 50, 140, 500, 30);
+  GLabel instructions2 = new GLabel(startWindow, 50, 110, 500, 30);
   instructions2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions2.setText("• Manage the food pantry and serve community members");
+  instructions2.setText("• Select the weather or season for the day from the dropdown menu");
   instructions2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions2.setOpaque(false);
   
-  GLabel instructions3 = new GLabel(startWindow, 50, 170, 500, 30);
+  GLabel instructions3 = new GLabel(startWindow, 50, 140, 500, 30);
   instructions3.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions3.setText("COLUR LEGEND: •Green people: Satisfied      •Yellow people (hungry): takes 5 cans      • Red people (very hungry): takes 8 cans");
+  instructions3.setText("• Manage the food pantry and serve community members");
   instructions3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions3.setOpaque(false);
   
-  GLabel instructions4 = new GLabel(startWindow, 50, 200, 500, 30);
+  
+  GLabel instructions4 = new GLabel(startWindow, 50, 170, 500, 30);
   instructions4.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions4.setText("• Adjust the total number of people in line using the slider");
+  instructions4.setText("• Monitor food stock levels in the top right corner");
   instructions4.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions4.setOpaque(false);
   
-  GLabel instructions5 = new GLabel(startWindow, 50, 230, 500, 30);
+  
+  GLabel instructions5 = new GLabel(startWindow, 50, 200, 500, 30);
   instructions5.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions5.setText("• Open or close service windows as needed");
+  instructions5.setText("• Adjust the total number of people in line using the slider");
   instructions5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions5.setOpaque(false);
   
-  GLabel instructions6 = new GLabel(startWindow, 50, 260, 500, 30);
+  GLabel instructions6 = new GLabel(startWindow, 50, 230, 500, 30);
   instructions6.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions6.setText("• Monitor food stock levels in the top right corner");
+  instructions6.setText("• Open or close service windows as needed");
   instructions6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions6.setOpaque(false);
   
-  startButton = new GButton(startWindow, 200, 350, 200, 60);
+  GLabel instructions7 = new GLabel(startWindow, 20, 260, 500, 30);
+  instructions7.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions7.setText("COLUR LEGEND:");
+  instructions7.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  instructions7.setOpaque(false);
+  
+  GLabel instructions8 = new GLabel(startWindow, 50, 290, 500, 30);
+  instructions8.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions8.setText("• Green: Satisfied person, has already received food.");
+  instructions8.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  instructions8.setOpaque(false);
+  
+  GLabel instructions9 = new GLabel(startWindow, 50, 320, 500, 30);
+  instructions9.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions9.setText("• Yellow: Very hungry person, will take 5 cans of food");
+  instructions9.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  instructions9.setOpaque(false);
+  
+  GLabel instructions10 = new GLabel(startWindow, 50, 350, 500, 30);
+  instructions10.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  instructions10.setText("• Red: Very hungry person, will take 8 cans of food");
+  instructions10.setLocalColorScheme(GCScheme.RED_SCHEME);
+  instructions10.setOpaque(false);
+  
+  startButton = new GButton(startWindow, 200, 390, 200, 60);
   startButton.setText("Start Simulation");
   startButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   startButton.addEventHandler(this, "startButtonClick");
