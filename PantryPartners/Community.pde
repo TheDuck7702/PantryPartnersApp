@@ -30,7 +30,7 @@ class Community { //Community members that receive food donations
     this.isServed = false;  
     this.xPos = xPos;
     this.yPos = yPos; 
-    this.gender = genders[int(random(2))];
+    this.gender = genders[int(random(2))]; //use the gender array to get a random gender
 
     // windows 1..4 (not 0..4) - use provided window number
     this.windowNumber = windowNum;
@@ -67,13 +67,12 @@ class Community { //Community members that receive food donations
   }
   
   //Methods
-  void drawCommunity() {
-    //to pick img
+  void drawCommunity() { 
+    //to pick img and draw the imgs
     if ( this.hungerLvl <=3 ){  //RED
       if (gender.equals("man")) {
         //draw GREEN image at xPos yPos of MAN
         image(manImgGreen, this.xPos, this.yPos, 73, 197);
-        
       }
       else{
         //draw GREEN image at xPos yPos of women
@@ -81,7 +80,6 @@ class Community { //Community members that receive food donations
         image(womenImgGreen, this.xPos, this.yPos, 73, 197);
       }
     }
-    
     else if ( this.hungerLvl <= 5 ) {   //YELLOW
       if ( gender.equals("man")) {
         //draw YELLOW image at xPos yPos of MAN
@@ -92,7 +90,6 @@ class Community { //Community members that receive food donations
         image(womenImgYellow, this.xPos, this.yPos, 73, 197);
       }
     }
-    
     else {     //this.hungerlvl <= 10    //RED
       if ( gender.equals("man") ) {
         //draw RED image at xPos yPos of MAN
@@ -104,7 +101,6 @@ class Community { //Community members that receive food donations
       }
     }
   }
-  
   //next method:
   void moveCommunity() {
     float speed = 0.05; // so 2 pixals per frame
@@ -121,7 +117,6 @@ class Community { //Community members that receive food donations
     } else {
       yPos = targety; // snap to target when very close
     }
-    
   }
 
   // check if they have fully walked off-screen
