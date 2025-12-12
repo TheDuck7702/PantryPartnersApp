@@ -41,7 +41,7 @@ void createStartWindow() {
   
   GLabel instructions2 = new GLabel(startWindow, 50, 110, 500, 30);
   instructions2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
-  instructions2.setText("• Select the weather or season for the day from the dropdown menu");
+  instructions2.setText("• Select the weather you want to simulate from the dropdown menu");
   instructions2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   instructions2.setOpaque(false);
   
