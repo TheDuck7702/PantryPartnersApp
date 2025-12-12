@@ -9,7 +9,7 @@ PImage womenImgGreen;
 PImage womenImgYellow;
 PImage womenImgRed;
 
-
+//window checkbox from gui
 Boolean clicked1 = false;
 Boolean clicked2 = false;
 Boolean clicked3 = false;
@@ -115,7 +115,7 @@ int findWindowWithLeastPeople() {
   
   return bestWindow;
 }
-
+//to update the total people (if theres less people than the slider it would add enough)
 void rebuildPeopleArray(int totalPeople) {
   people = new Community[totalPeople];
 
@@ -160,6 +160,7 @@ void resetGame() {
   }
 }
 
+//recalc the line positions as people leave and join
 void updateLinePositions() {
   // For each window, sort people by arrival time (first-come-first-serve)
   for (int win = 1; win <= 4; win++) {
@@ -233,6 +234,7 @@ void updateLinePositions() {
     }
   }
 }
+
 
 void maintainPeopleCount() {
   // Count how many people are currently in line (not served)
