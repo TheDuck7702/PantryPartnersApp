@@ -418,8 +418,8 @@ for (int i = 0; i < people.length; i++) {
         }
 
         // move and draw
-        c.moveHomeless();
-        c.drawHomeless();
+        c.moveCommunity();
+        c.drawCommunity();
     }
 }
 

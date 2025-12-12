@@ -1,5 +1,4 @@
-class Community { //homeless people
-
+class Community { //Community members that receive food donations
   
   String[] genders = {"man", "women"};  //for random man or women generator
   //Fields
@@ -42,7 +41,7 @@ class Community { //homeless people
     this.arrivalTime = -1; // not arrived yet
     this.hungerBeforeServed = 0; // initialize hunger before served
     
-    //calc which target x and target y form the posInLine and windowNumber. done in constructor bc so each homeless guy immediately knows the target x and y.
+    //calc which target x and target y form the posInLine and windowNumber. done in constructor because so each community member immediately knows the target x and y.
     recalcTarget();
   }
 
@@ -68,7 +67,7 @@ class Community { //homeless people
   }
   
   //Methods
-  void drawHomeless() {
+  void drawCommunity() {
     //to pick img
     if ( this.hungerLvl <=3 ){  //RED
       if (gender.equals("man")) {
@@ -107,7 +106,7 @@ class Community { //homeless people
   }
   
   //next method:
-  void moveHomeless() {
+  void moveCommunity() {
     float speed = 0.05; // so 2 pixals per frame
     
     // Always move towards target, even if close (helps with smooth movement when positions update)

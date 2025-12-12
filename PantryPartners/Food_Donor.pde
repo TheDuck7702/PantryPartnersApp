@@ -52,7 +52,7 @@ class foodDonor {
     else if (selectedWeatherName.equals("Cloudy")) {        
       return int(random(8, 35));        
     }      
-    else {        
+    else {  //If snowy day then have the most donations, due seasonal campaigns such as Christmas drives     
       return int(random(15, 50));       
     }    
   }
